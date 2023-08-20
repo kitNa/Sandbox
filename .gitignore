@@ -31,6 +31,9 @@ doc/api/
 *.jit
 *.dill
 
-# Intellij IDEA / Android Studio
+# Intellij IDEA / Android Studio - don't commit those as people
+# may use differnt versions/configurations/etc. for their IDEs
+# and changes in these files will pollute git history with tons
+# of non human readable diffs
 .idea/
 .iml
