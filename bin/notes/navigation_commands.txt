@@ -1,0 +1,12 @@
+cd - изменить каталог cd test
+dir - вывести список каталогов  dir c:\test\directory
+copy - копировать файл	copy c:\test\test.txt c:\windows\test.txt
+move - переместить файл	move c:\test\test.txt c:\windows\test.txt
+mkdir (или md) - создать новый каталог	mkdir testdirectory
+rmdir (или rd) - удалить директорию	rmdir c:\test\directory
+del - удалить файл del c:\test\test.txt
+cls - очистить содержимое терминала
+[CMD] /? - справка для команды	cd /?
+
+
+Список всех команд: https://ss64.com/
