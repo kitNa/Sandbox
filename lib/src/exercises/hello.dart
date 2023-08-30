@@ -1,3 +1,3 @@
 void main() {
-  print('hello from Katya - addition from Dmytro');
+  print('hello from Katya and Dima. Resolved merge conflict');
 }
