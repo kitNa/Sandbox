@@ -7,5 +7,5 @@ Object name1 = 'Bob';
 
 void main(List<String> arguments) {
   print(name);
-  print(name1);
+ // prcl_сommandsint(name1);
 }
