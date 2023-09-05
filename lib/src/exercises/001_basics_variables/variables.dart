@@ -67,6 +67,32 @@ void variablesDeclarations() {
   //    then try to call "purr()" method on it - observe the result, note how compiler doesn't complain about anything
   //    trouts don't purr, right?
   //    then reassign the same variable to a new Cat object and call "purr()" again - observe the result
+
+  //1.
+  print ("***variablesDeclarations1***");
+  var cat = "Cat";
+  var dog = "Dog";
+  var parrot = "Parrot";
+  String catName = "Marfushyk";
+  String dogName = "Krokki";
+  String parrotName = "Archi";
+
+  void printAnimalName(String animal, String name){
+    print(animal + name);
+  }
+
+  printAnimalName(cat, catName);
+  printAnimalName(dog, dogName);
+  printAnimalName(parrot, parrotName);
+
+  //2.
+  print ("***variablesDeclarations2***");
+  dynamic  trout = new Trout();
+  //trout.purr(); //NoSuchMethodError: Class 'Trout' has no instance method 'purr'.
+  Cat cat_trout = new Cat() ;
+  cat_trout.purr();
+  //cat_trout = trout;//type 'Trout' is not a subtype of type 'Cat'
+  cat_trout.purr();
 }
 
 void nullSafety() {
@@ -96,7 +122,25 @@ void nullSafety() {
   //
   //      Computer(this.cpu, this.ram, this.hdd, this.monitor, this.mouse);
   //    }
+
+  //1.
+  //String myHeart = null; - A value of type 'Null' can't be assigned to a variable of type 'String'
+  print ("***nullSafety1***");
+  String myHeart = "full of love to Dart";
+  print (myHeart);
+
+  //2.
+  print ("***nullSafety2***");
+  String? zombieHeart = null;
+  print (zombieHeart);
+
+  //3.
+  print ("***nullSafety3***");
+  Car car = new Car._('rotary','light alloy', null);
+  car.printCar();
+
 }
+
 
 void defaultValue() {
   // 1. Print out nullable uninitialized variables:
@@ -143,6 +187,27 @@ void constAndFinalVariables() {
 
 
 // ---------------------------------------------------------------------------------------------------------------------
+//не понимаю, как мне сделать так, что бы в клас можно было вносить свои значения полей
+class Car {
+  String engine;
+  String wheels;
+  String? back_door;
+
+  Car._({
+    required this.engine,
+    required this.wheels,
+    required this.back_door,
+  });
+
+  void printCar(){
+    if(back_door == null){
+      print("This car has a ${engine} engine, ${wheels} wheels and does not have a rear door");
+    }
+    else{
+      print("This car has a ${engine} engine, ${wheels} wheels and a rear door");
+    }
+  }
+}
 
 String getBankHistory(String clientId) {
   print('Gathering LOTS of information from the database ....');
