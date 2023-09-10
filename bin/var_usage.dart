@@ -15,7 +15,7 @@ void main() {
 
   //2)Assigning different numerical types to VAR variable
   void printNumbersType() {
-    var number;   // this is inferred as null
+    var number; // this is inferred as null
     number = 22;   // this is inferred as int
     print('Number is ${number.runtimeType} with value $number');
     number = 22.4;    // this is inferred as double
