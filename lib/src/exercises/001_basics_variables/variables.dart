@@ -48,7 +48,7 @@ void main() {
   untyped2 = Cat();
   untyped2.purr();
   untyped2 = Trout();
-  // untyped2.purr(); // NO compilation error here, but the call will fail in runtime with NoSuchMethodError
+  //untyped2.purr(); // NO compilation error here, but the call will fail in runtime with NoSuchMethodError
 
   // -----------
   variablesDeclarations();
@@ -67,6 +67,32 @@ void variablesDeclarations() {
   //    then try to call "purr()" method on it - observe the result, note how compiler doesn't complain about anything
   //    trouts don't purr, right?
   //    then reassign the same variable to a new Cat object and call "purr()" again - observe the result
+
+  //1.
+  print ("***variablesDeclarations1***");
+  var cat = "Cat";
+  var dog = "Dog";
+  var parrot = "Parrot";
+  String catName = "Marfushyk";
+  String dogName = "Krokki";
+  String parrotName = "Archi";
+
+  void printAnimalName(String animal, String name){
+    print(animal + name);
+  }
+
+  printAnimalName(cat, catName);
+  printAnimalName(dog, dogName);
+  printAnimalName(parrot, parrotName);
+
+  //2.
+  print ("***variablesDeclarations2***");
+  dynamic  trout = new Trout();
+  //trout.purr(); //NoSuchMethodError: Class 'Trout' has no instance method 'purr'.
+  Cat cat_trout = new Cat() ;
+  cat_trout.purr();
+  //cat_trout = trout;//type 'Trout' is not a subtype of type 'Cat'
+  cat_trout.purr();
 }
 
 void nullSafety() {
@@ -96,15 +122,65 @@ void nullSafety() {
   //
   //      Computer(this.cpu, this.ram, this.hdd, this.monitor, this.mouse);
   //    }
+
+  //1.
+  //String myHeart = null; - A value of type 'Null' can't be assigned to a variable of type 'String'
+  print ("***nullSafety1***");
+  String myHeart = "full of love to Dart";
+  print (myHeart);
+
+  //2.
+  print ("***nullSafety2***");
+  String? zombieHeart = null;
+  print (zombieHeart);
+
+  //3.
+  print ("***nullSafety3***");
+  Car bmv_xm = new Car('hybrid', 'composite', 'touch', 'present', 'built-in');
+  Car mercedes_coupe_xm = new Car('petrol', 'stamped', 'touch', null, 'built-in');
+  Car smart_fortwo = new Car('petrol', 'stamped', 'mechanical', null, null);
+  print(bmv_xm);
+  print(mercedes_coupe_xm);
+  print(smart_fortwo);
+
+  //4.
+  print ("***nullSafety4***");
+  //у всіх значень типу null однаковий хеш-код, а в типу string - різний
+  print('smart_fortwo engine is ${smart_fortwo.engine.runtimeType} with hash code ${smart_fortwo.engine.hashCode}');
+  print('smart_fortwo wheels is ${smart_fortwo.wheels.runtimeType} with hash code ${smart_fortwo.wheels.hashCode}');
+  print('smart_fortwo dashboard is ${smart_fortwo.dashboard.runtimeType} with hash code ${smart_fortwo.dashboard.hashCode}');
+  print('smart_fortwo trunk is ${smart_fortwo.rear_doors.runtimeType} with hash code ${smart_fortwo.rear_doors.hashCode}');
+  print('smart_fortwo trunk is ${smart_fortwo.trunk.runtimeType} with hash code ${smart_fortwo.trunk.hashCode}');
+  print('mercedes_coupe_xm trunk is ${mercedes_coupe_xm.rear_doors.runtimeType} with hash code ${mercedes_coupe_xm.rear_doors.hashCode}');
+  //На типі null  не можна визвати метод, що визначає довжину
+  print('length of significance smart_fortwo engine is ${smart_fortwo.engine.length}');
+  //print('length of significance smart_fortwo trunk is ${smart_fortwo.trunk.length}');
 }
+
+class Car{
+       String engine;
+       String wheels;
+       String dashboard;
+       String? rear_doors;  // <<--- this is nullable
+       String? trunk;    // <<--- this is nullable
+
+       Car(this.engine, this.wheels, this.dashboard, this.rear_doors, this.trunk);
+     }
+
 
 void defaultValue() {
   // 1. Print out nullable uninitialized variables:
-  //   - zombieHeart      (string obj)
-  //   - car              (custom obj)
-  //   - salaryOfMyDream  (int)
-  //   - var weird = 7/8; (double)
-  //   - dynamic myTrout; (dynamic)
+  String? zombieHeart; //(string obj)
+  Car? car; //(custom obj)
+  int? salaryOfMyDream;//(int)
+  var weird = 7/8; //(double)
+  dynamic? myTrout; //(dynamic)
+  print ("***defaultValue***");
+  print (zombieHeart);
+  print (car);
+  print (salaryOfMyDream);
+  print (weird);
+  print (myTrout);
 }
 
 void lateVariables() {
@@ -113,6 +189,19 @@ void lateVariables() {
 
   // 2. Create "late" String variable "myBankHistory" which is lazily initialized with "getBankHistory()". Run the app.
   //    Then print bank history variable and observe the output.
+
+  //1
+  print ("***lateVariables1***");
+  late int salaryOfMyDream;
+  //It is a compile time error
+  //print(salaryOfMyDream);
+  print('When trying to print an uninitialized late variable, I received a compilation time error');
+
+  //2
+  print ("***lateVariables2***");
+  late String myBankHistory;
+  myBankHistory = getBankHistory('123');
+  print(myBankHistory);
 }
 
 void constAndFinalVariables() {
@@ -139,10 +228,50 @@ void constAndFinalVariables() {
   // 3. Create final Animal variable "myCat" and assign it to a new Cat object. Then try to reassign it to a new Dog.
   //    Observe the error. Then try to reassign it to another new Cat object. Observe the error. Your cat is with you
   //    forever, you can't change it when it's final.
+
+  //1
+  print ("***constAndFinalVariables1***");
+  //const int salaryOfMyDream; - The constant 'salaryOfMyDream' must be initialized
+  const int salaryOfMyDream = 100000000;
+  //salaryOfMyDream = 0; - Constant variables can't be assigned a value
+  print('Constant int variables can not be assigned a value');
+
+  //2
+  print ("***constAndFinalVariables2***");
+  const String myName = 'Kstya';
+  //myName = myName + ' is the best'; - Constant variables can't be assigned a value.
+  print('Constant string variables can not be assigned a value');
+
+  //3
+  print ("***constAndFinalVariables3***");
+  final Cat myCat = new Cat();
+  //myCat = new Dog(); - The final variable 'myCat' can only be set once.
+  print('The final variable can only be set once');
 }
 
 
 // ---------------------------------------------------------------------------------------------------------------------
+//не понимаю, как мне сделать так, что бы в клас можно было вносить свои значения полей
+// class Car {
+//   String engine;
+//   String wheels;
+//   String? back_door;
+//
+//   Car._({
+//     required this.engine,
+//     required this.wheels,
+//     required this.back_door,
+//   });
+//
+//   void printCar(){
+//     if(back_door == null){
+//       print("This car has a ${engine} engine, ${wheels} wheels and does not have a rear door");
+//     }
+//     else{
+//       print("This car has a ${engine} engine, ${wheels} wheels and a rear door");
+//     }
+//   }
+// }
 
 String getBankHistory(String clientId) {
   print('Gathering LOTS of information from the database ....');
