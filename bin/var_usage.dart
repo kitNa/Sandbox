@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 //Peculiarities of the behavior of the variable with the keyword VAR
 void main() {

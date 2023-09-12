@@ -192,7 +192,9 @@ void lateVariables() {
 
   //1
   print ("***lateVariables1***");
-  late int salaryOfMyDream;
+  int salaryOfMyDream;
+  salaryOfMyDream = 12;
+  salaryOfMyDream = 18;
   //It is a compile time error
   //print(salaryOfMyDream);
   print('When trying to print an uninitialized late variable, I received a compilation time error');
@@ -244,7 +246,7 @@ void constAndFinalVariables() {
 
   //3
   print ("***constAndFinalVariables3***");
-  final Cat myCat = new Cat();
+  final Cat myCat = Cat();
   //myCat = new Dog(); - The final variable 'myCat' can only be set once.
   print('The final variable can only be set once');
 }
