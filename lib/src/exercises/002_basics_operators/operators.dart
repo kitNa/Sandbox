@@ -24,15 +24,15 @@ void arithmeticOperators() {
   //    the rest. How much money does each of you get?
   print('***arithmeticOperators3***');
   cash = 100;
-  var kidMany = cash*0.2;
-  var myMany = cash*0.3;
-  var husbandMany = cash - kidMany - myMany;
-  print('My kid gets ${kidMany} \$, I get ${myMany}\$ and my husband gets ${husbandMany}\$');
+  var kidMoney = cash * 0.2;
+  var myMoney = cash * 0.3;
+  var husbandMoney = cash - kidMoney - myMoney;
+  print('My kid gets $kidMoney \$, I get $myMoney\$ and my husband gets $husbandMoney\$');
 
   // 4. Find all numbers between 1 and 20 that are divisible by 3 and 2. (use % operator - remainder of the division)
   print('***arithmeticOperators4***');
-  for(int i = 2; i<20; i++){
-    if(i%2 == 0 && i%3 == 0){
+  for (int i = 2; i < 20; i++) {
+    if (i % 2 == 0 && i % 3 == 0) {
       print(i);
     }
   }
@@ -40,8 +40,8 @@ void arithmeticOperators() {
   // 5. Now count how many numbers between 1 and 20 are divisible by 3 and 2. (use counter variable and ++ operator)
   print('***arithmeticOperators5**');
   var counter = 0;
-  for(int i = 2; i<20; i++){
-    if(i%2 == 0 || i%3 == 0){
+  for (int i = 2; i < 20; i++) {
+    if (i % 2 == 0 || i % 3 == 0) {
       counter++;
     }
   }
@@ -56,17 +56,15 @@ void arithmeticOperators() {
   print('***arithmeticOperators6**');
   counter = 0;
   var countOfSteps = 0;
-  while(counter <= 100){
+  while (counter <= 100) {
     countOfSteps ++;
     var rnd = Random();
     var dice = rnd.nextInt(6) + 1;
-    if(dice == 3 && countOfSteps >= 1){
+    if (dice == 3 && countOfSteps >= 1) {
       counter--;
-    }
-    else if(dice == 3 && countOfSteps < 1){
+    } else if (dice == 3 && countOfSteps < 1) {
       counter = 0;
-    }
-    else {
+    } else {
       counter++;
     }
   }
@@ -75,8 +73,8 @@ void arithmeticOperators() {
   // 7. Find sum of all numbers between 1 and 100 that are divisible by 3 and 2. (use += operator)
   print('***arithmeticOperators7**');
   var sum = 0;
-  for(int i = 2; i<100; i++){
-    if(i%2 == 0 && i%3 == 0){
+  for (int i = 2; i < 100; i++) {
+    if (i % 2 == 0 && i % 3 == 0) {
       sum += i;
     }
   }
@@ -85,7 +83,7 @@ void arithmeticOperators() {
   // 8. Create a function that accepts String and returns same string or "UNDEFINED" if string is null.
   //    (use ??= operator)
   print('***arithmeticOperators8**');
-  void printString(String? string){
+  void printString(String? string) {
     string ??= "UNDEFINED";
     print(string);
   }

@@ -93,6 +93,10 @@ void variablesDeclarations() {
   cat_trout.purr();
   //cat_trout = trout;//type 'Trout' is not a subtype of type 'Cat'
   cat_trout.purr();
+
+  //гарний сценарій використання - тернарні оператори
+  var names = true ? {'set'} : ['list'];
+  //компілятор визначає тип як EfficientLengthIterable<String>, але програмісту не довелося вручну його визначати
 }
 
 void nullSafety() {
