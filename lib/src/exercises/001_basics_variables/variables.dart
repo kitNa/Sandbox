@@ -22,8 +22,7 @@ void main() {
   // Dart behaves as statically typed language by default, but can become dynamic if you use "dynamic" type
   dynamic dynamicVar = Cat();
   dynamicVar.purr();
-  dynamicVar =
-      Dog(); // no compilation error, you can reassign "dynamic" variables to any type
+  dynamicVar = Dog(); // no compilation error, you can reassign "dynamic" variables to any type
   dynamicVar.speak(); // --> Dog barks
   // dynamicVar.purr();
   // dynamicVar.bark();
@@ -35,7 +34,7 @@ void main() {
   // So there's compile time type and runtime type. Compile time type is used by compiler to check if you're calling
   // correct methods on variables. Runtime type takes effect when you run your application.
   // Runtime type can be accessed via "runtimeType" property
-  print("dynamicVar.runtimeType=${dynamicVar.runtimeType}"); // --> Dog
+  print("dynamicVar.runtimeType = ${dynamicVar.runtimeType}"); // --> Dog
   // or can be checked via "is" operator (or "is!" for negation)
   if (dynamicVar is Dog) {
     print('dynamicVar is Dog');
@@ -88,12 +87,12 @@ void variablesDeclarations() {
 
   //2.
   print("***variablesDeclarations2***");
-  dynamic trout = new Trout();
+  dynamic trout = Trout();
   //trout.purr(); //NoSuchMethodError: Class 'Trout' has no instance method 'purr'.
-  Cat cat_trout = new Cat();
-  cat_trout.purr();
+  Cat catTrout = Cat();
+  catTrout.purr();
   //cat_trout = trout;//type 'Trout' is not a subtype of type 'Cat'
-  cat_trout.purr();
+  catTrout.purr();
 
   //гарний сценарій використання - тернарні оператори
   var names = true ? {'set'} : ['list'];
@@ -141,43 +140,42 @@ void nullSafety() {
 
   //3.
   print("***nullSafety3***");
-  Car bmv_xm = new Car('hybrid', 'composite', 'touch', 'present', 'built-in');
-  Car mercedes_coupe_xm =
-      new Car('petrol', 'stamped', 'touch', null, 'built-in');
-  Car smart_fortwo = new Car('petrol', 'stamped', 'mechanical', null, null);
-  print(bmv_xm);
-  print(mercedes_coupe_xm);
-  print(smart_fortwo);
+  Car bmvXm = new Car('hybrid', 'composite', 'touch', 'present', 'built-in');
+  Car mercedesCoupeXm = new Car('petrol', 'stamped', 'touch', null, 'built-in');
+  Car smartFortwo = new Car('petrol', 'stamped', 'mechanical', null, null);
+  print(bmvXm);
+  print(mercedesCoupeXm);
+  print(smartFortwo);
 
   //4.
   print("***nullSafety4***");
   //у всіх значень типу null однаковий хеш-код, а в типу string - різний
-  print(
-      'smart_fortwo engine is ${smart_fortwo.engine.runtimeType} with hash code ${smart_fortwo.engine.hashCode}');
-  print(
-      'smart_fortwo wheels is ${smart_fortwo.wheels.runtimeType} with hash code ${smart_fortwo.wheels.hashCode}');
-  print(
-      'smart_fortwo dashboard is ${smart_fortwo.dashboard.runtimeType} with hash code ${smart_fortwo.dashboard.hashCode}');
-  print(
-      'smart_fortwo trunk is ${smart_fortwo.rear_doors.runtimeType} with hash code ${smart_fortwo.rear_doors.hashCode}');
-  print(
-      'smart_fortwo trunk is ${smart_fortwo.trunk.runtimeType} with hash code ${smart_fortwo.trunk.hashCode}');
-  print(
-      'mercedes_coupe_xm trunk is ${mercedes_coupe_xm.rear_doors.runtimeType} with hash code ${mercedes_coupe_xm.rear_doors.hashCode}');
+  print('smartFortwo engine is ${smartFortwo.engine.runtimeType} '
+      'with hash code ${smartFortwo.engine.hashCode}');
+  print('smartFortwo wheels is ${smartFortwo.wheels.runtimeType} '
+      'with hash code ${smartFortwo.wheels.hashCode}');
+  print('smartFortwo dashboard is ${smartFortwo.dashboard.runtimeType} '
+      'with hash code ${smartFortwo.dashboard.hashCode}');
+  print('smartFortwo trunk is ${smartFortwo.rearDoors.runtimeType}'
+      'with hash code ${smartFortwo.rearDoors.hashCode}');
+  print('smartFortwo trunk is ${smartFortwo.trunk.runtimeType} '
+      'with hash code ${smartFortwo.trunk.hashCode}');
+  print('mercedesCoupeXm trunk is ${mercedesCoupeXm.rearDoors.runtimeType} '
+      'with hash code ${mercedesCoupeXm.rearDoors.hashCode}');
   //На типі null  не можна визвати метод, що визначає довжину
-  print(
-      'length of significance smart_fortwo engine is ${smart_fortwo.engine.length}');
-  //print('length of significance smart_fortwo trunk is ${smart_fortwo.trunk.length}');
+  print('length of significance smartFortwo engine is '
+      '${smartFortwo.engine.length}');
+  //print('length of significance smartFortwo trunk is ${smartFortwo.trunk.length}');
 }
 
 class Car {
   String engine;
   String wheels;
   String dashboard;
-  String? rear_doors; // <<--- this is nullable
+  String? rearDoors; // <<--- this is nullable
   String? trunk; // <<--- this is nullable
 
-  Car(this.engine, this.wheels, this.dashboard, this.rear_doors, this.trunk);
+  Car(this.engine, this.wheels, this.dashboard, this.rearDoors, this.trunk);
 }
 
 void defaultValue() {
@@ -209,8 +207,8 @@ void lateVariables() {
   salaryOfMyDream = 18;
   //It is a compile time error
   //print(salaryOfMyDream);
-  print(
-      'When trying to print an uninitialized late variable, I received a compilation time error');
+  print('When trying to print an uninitialized late variable, '
+      'I received a compilation time error');
 
   //2
   print("***lateVariables2***");
@@ -253,7 +251,7 @@ void constAndFinalVariables() {
 
   //2
   print("***constAndFinalVariables2***");
-  const String myName = 'Kstya';
+  const String myName = 'Katya';
   //myName = myName + ' is the best'; - Constant variables can't be assigned a value.
   print('Constant string variables can not be assigned a value');
 

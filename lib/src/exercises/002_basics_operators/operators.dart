@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:io';
 
 void main() {
   // https://dart.dev/language/operators
@@ -27,8 +26,8 @@ void arithmeticOperators() {
   var kidMoney = cash * 0.2;
   var myMoney = cash * 0.3;
   var husbandMoney = cash - kidMoney - myMoney;
-  print(
-      'My kid gets $kidMoney \$, I get $myMoney\$ and my husband gets $husbandMoney\$');
+  print('My kid gets $kidMoney \$, I get $myMoney\$ '
+      'and my husband gets $husbandMoney\$');
 
   // 4. Find all numbers between 1 and 20 that are divisible by 3 and 2. (use % operator - remainder of the division)
   print('***arithmeticOperators4***');
