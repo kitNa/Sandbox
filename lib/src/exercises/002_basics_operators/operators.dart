@@ -18,7 +18,7 @@ void arithmeticOperators() {
   // 2. You have 50.0 and you want to buy 3 coffees for 3.65 each. How much money do you have left?
   print('***arithmeticOperators2***');
   var cash = 50;
-  print('I have left ${cash - 3*priceCoffee}');
+  print('I have left ${cash - 3 * priceCoffee}');
 
   // 3. You have 100$. You want to split it between your family members. Your kid gets 20%, your wife 30% and you keep
   //    the rest. How much money does each of you get?
@@ -27,7 +27,8 @@ void arithmeticOperators() {
   var kidMoney = cash * 0.2;
   var myMoney = cash * 0.3;
   var husbandMoney = cash - kidMoney - myMoney;
-  print('My kid gets $kidMoney \$, I get $myMoney\$ and my husband gets $husbandMoney\$');
+  print(
+      'My kid gets $kidMoney \$, I get $myMoney\$ and my husband gets $husbandMoney\$');
 
   // 4. Find all numbers between 1 and 20 that are divisible by 3 and 2. (use % operator - remainder of the division)
   print('***arithmeticOperators4***');
@@ -57,7 +58,7 @@ void arithmeticOperators() {
   counter = 0;
   var countOfSteps = 0;
   while (counter <= 100) {
-    countOfSteps ++;
+    countOfSteps++;
     var rnd = Random();
     var dice = rnd.nextInt(6) + 1;
     if (dice == 3 && countOfSteps >= 1) {
@@ -87,6 +88,7 @@ void arithmeticOperators() {
     string ??= "UNDEFINED";
     print(string);
   }
+
   printString('Hallo!');
   printString(null);
 }
