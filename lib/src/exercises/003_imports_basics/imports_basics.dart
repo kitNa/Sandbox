@@ -91,4 +91,21 @@ Future<void> importPublicLibrary() async {
   // (we'll learn what "await" means later):
   // var resp = await http.get(Uri.parse('https://dart.dev'));
   // print('response headers: ${resp.headers}');
+<<<<<<< Updated upstream
+=======
+  var respGoogle = await http.get(Uri.parse('https://google.com'));
+  var respGoogleStatusCode = respGoogle.statusCode;
+  var respGoogleBodylength = respGoogle.body.length;
+  print('response status code from Google: $respGoogleStatusCode');
+  print('response body length from Google: $respGoogleBodylength');
+
+  var respDart = await http.get(Uri.parse('https://dart.dev'));
+  var respDartStatusCode = respDart.statusCode;
+  var respDartBodylength = respDart.body.length;
+  print('response status code from Dart: $respDartStatusCode');
+  print('response body length from Dart: $respDartBodylength');
+
+  print('Response body length from Dart is bigger on: '
+      '${respDartBodylength - respGoogleBodylength}');
+>>>>>>> Stashed changes
 }
