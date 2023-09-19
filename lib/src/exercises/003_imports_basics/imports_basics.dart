@@ -1,4 +1,11 @@
-// imports need to be added here
+//imports need to be added here
+import 'dart:math';
+import 'dart:io';
+import 'dart:io' as io;
+import 'dart:math' as math;
+//import 'dart:io' show stderr;
+//import 'dart:io' hide stdout;
+import 'package:http/http.dart' as http;
 
 Future<void> main() async {
   // NOTE: ignore those Future, async and await keywords for now, they will be covered later. We need them here for
@@ -50,8 +57,10 @@ void importWithPrefix() {
   //    in both ways:
   //    stdout.writeln('THIS GOES TO STANDARD OUTPUT STREAM');
   //    io.stdout.writeln('THIS GOES TO STANDARD OUTPUT STREAM');
+  io.stderr.writeln('THIS IS ERROR" to the "stderr');
 
   // 2. import dart:math library with prefix "math" and use it to calculate sine of 7.5 radians
+  print(math.sin(7.5));
 }
 
 void importPieces() {
@@ -67,9 +76,17 @@ void importPieces() {
   // 1. Remove all imports list first. Then import only "stderr" from dart io library, and print
   //    "k8 is gr8 (this is not an error)" to it. Now try to print that message to "stdout" and check what compiler
   //    thinks about using elements that were not imported.
+  stderr.writeln('k8 is gr8 (this is not an error)');
+
+  //Undefined name 'stdout'
+  stdout.writeln('k8 is gr8 (this is not an error)');
 
   // 2. Remove all imports list first. Now import everything from dart:io library except "stdout". And try to print
   //    same "k8 is gr8" message to "stderr". Now print it to "stdout" and see how it's not imported.
+  stderr.writeln('k8 is gr8');
+
+  //Undefined name 'stdout'
+  stdout.writeln('k8 is gr8');
 }
 
 Future<void> importPublicLibrary() async {
@@ -91,8 +108,7 @@ Future<void> importPublicLibrary() async {
   // (we'll learn what "await" means later):
   // var resp = await http.get(Uri.parse('https://dart.dev'));
   // print('response headers: ${resp.headers}');
-<<<<<<< Updated upstream
-=======
+
   var respGoogle = await http.get(Uri.parse('https://google.com'));
   var respGoogleStatusCode = respGoogle.statusCode;
   var respGoogleBodylength = respGoogle.body.length;
@@ -107,5 +123,4 @@ Future<void> importPublicLibrary() async {
 
   print('Response body length from Dart is bigger on: '
       '${respDartBodylength - respGoogleBodylength}');
->>>>>>> Stashed changes
 }
