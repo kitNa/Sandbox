@@ -1,4 +1,5 @@
 // import 'package:http/http.dart' as http;
+import 'dart:convert' show utf8;
 
 Future<void> main() async {
   // https://dart.dev/language/built-in-types
@@ -6,6 +7,11 @@ Future<void> main() async {
   // Those types are built-in in Dart, they are available everywhere without any imports.
   // Everything in Dart is an object, even numbers, functions, null, etc. Hence, everything can be null and every type
   // has a constructor.
+
+  // HEX  - hexadecimal  (16)
+  // DEC - decimal  (10)
+  // OCT - octal  (8)
+  // BIN - binary (2)
 
   numbers();
   strings();
@@ -18,31 +24,79 @@ void numbers() {
 
   // 1. Define a HEX (hexadecimal, or 16 radix) int variable with "deadbeef" value. Print it in 10, 8 (octal) and 2
   // radixes.
+  print('***numbers1***');
 
-  // To get 1234 in octal radix:
-  // 1234.toRadixString(8)
+  print((0Xdeadbeef).toRadixString(16));
+  int hex = 0Xdeadbeef;
+
+  print(hex.toRadixString(10));
+  print(hex.toRadixString(8));
+  print(hex.toRadixString(2));
 
   // 2. Define "min" variable as simple int, and "max" variable as HEX int. Pick any values you like, but max should be
   // greater than min. Calculate sum of all numbers between them. And then print min, max, sum in 10 and 16 radixes.
+  print('***numbers2***');
+
+  int intMin = 10;
+  int intMax = 0Xf;
+  var sum = 0;
+
+  for(var i = intMin; i<intMax; i++){
+    sum += i;
+  }
+
+  print('Min in the decimal number system ${intMin.toRadixString(10)}\n'
+      'Min In hexadecimal number system ${intMin.toRadixString(16)}');
+  print('Max in the decimal number system ${intMax.toRadixString(10)}\n'
+      'Max In hexadecimal number system ${intMax.toRadixString(16)}');
+  print('Sum in the decimal number system ${sum.toRadixString(10)}\n'
+      'Sum In hexadecimal number system ${sum.toRadixString(16)}');
 
   // 3. Define double "min" and "max" variables. Calculate sum of all numbers between them with increment step 0.1.
   // Use this snippet as an iteration example:
   // for (var i = 0.0; i < 1.0; i += 0.1) {
-
   // Use "+=" operator to add to the sum variable.
+  print('***numbers3***');
+  double doubleMin = 0.567;
+  double doubleMax = 1.432;
+  var doubleSum = 0.0;
+
+  for(var i = doubleMin; i < doubleMax; i += 0.1){
+    doubleSum += i;
+  }
+
+  print(doubleSum);
 
   // Then print following methods results for the calculated sum:
   // - toStringAsFixed(2) - prints number with 2 digits after decimal point
+  print(doubleSum.toStringAsFixed(2));
   // - toStringAsExponential(4) - prints number in exponential format with 4 digits after decimal point
+  print(doubleSum.toStringAsExponential(4));
   // - toStringAsPrecision(2) - prints number with 2 significant digits
+  print(doubleSum.toStringAsPrecision(2));
   // - floor() - returns largest integer value that is less than or equal to the number
+  print(doubleSum.floor());
   // - ceil() - returns smallest integer value that is greater than or equal to the number
+  print(doubleSum.ceil());
   // - round() - returns integer value that is closest to the number
+  print(doubleSum.round());
   // - toInt() - returns value truncated to integer
+  print(doubleSum.toInt());
 
   // 4. Parse "1234" string to int and print it. Then parse "1234.5" string to int and print it. What happens?
+  print('***numbers3***');
+  String intString = "1234";
+  String doubleString = "1234.5";
+  print(int.parse(intString));
+
+  //FormatException: Invalid radix-10 number (at character 1)
+  // 1234.5
+  // print(int.parse(doubleString));
 
   // 5. Parse "1234" string to double and print it. Then parse "1234.5" string to double and print it.
+  print('***numbers3***');
+  print(double.parse(intString));
+  print(double.parse(doubleString));
 }
 
 void strings() {
