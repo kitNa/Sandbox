@@ -1,5 +1,6 @@
 // import 'package:http/http.dart' as http;
 import 'dart:convert' show utf8;
+import 'package:http/http.dart' as http;
 
 Future<void> main() async {
   // https://dart.dev/language/built-in-types
@@ -303,6 +304,35 @@ void strings() {
       print('There are no vowels in the $brand brand name');
     }
   }
+
+  //indexOf виводить кількість символів до першого входження шуканого набору символів. Мова має значення. К(англійською розкладкою)
+  //не буде найдено в тексті, написаниого українскою розкладкою.
+  print('\n***strings16*** \n');
+
+  var string =  'My name is Katya'; //до "Katya" 11 символів
+  var index = string.indexOf('Katya');
+  print(index);
+
+  var string1 =  'My name is Katya'; //до "K" 11 символів
+  var index1 = string.indexOf('K');
+  print(index1);
+
+  var string2 =  'My name is Katya'; //до "a" 4 символи
+  var index2 = string.indexOf('a');
+  print(index2);
+
+  var string3 =  'My name is Katya';
+  var index3 = string.indexOf('К'); //тут "К" написано на українскьій розкладці
+  print(index3); //index3 = -1
+
+  //Друк частини тексту за допомогою методу substring.
+  //substring друкує текст після початковогу індексу до кінцевого індексу (включно)
+  //Вивести інформацію про хоббі.
+  var aboutMe = 'My name is Katya. I like to draw and surf. '
+      'I am married and have a child.';
+  var startIndex = aboutMe.indexOf('I like');
+  var endIndex = aboutMe.indexOf('I am');
+  print(aboutMe.substring(startIndex, endIndex));
 }
 
 Iterable<String> reversedSentence (String sentence) {
@@ -319,6 +349,8 @@ Future<void> mobyDick() async {
   var mobyDickUrl = Uri.parse('https://www.gutenberg.org/files/2701/old/moby10b.txt');
   var mobyDickFull = (await http.get(mobyDickUrl)).body;
    */
+  var mobyDickUrl = Uri.parse('https://www.gutenberg.org/files/2701/old/moby10b.txt');
+  var mobyDickFull = (await http.get(mobyDickUrl)).body;
 
   // 1. Cut the blah-blah-blah parts. The actual novel starts with
   // "CHAPTER 1"
@@ -327,6 +359,13 @@ Future<void> mobyDick() async {
   // "End of this Project Gutenberg etext"
   // Use "indexOf" and "substring" methods to cut off those unnecessary header and footer parts and leave only the
   // novel text itself as a separate variable "mobyDick".
+  print('\n***MOBY DICK 1***\n');
+  var indexChapter1 = mobyDickFull.indexOf('CHAPTER 1');
+  var indexEnd = mobyDickFull.indexOf('End of this Project');
+  print(indexChapter1);
+  print(indexEnd);
+  var mobyDick = mobyDickFull.substring(indexChapter1, indexEnd).trimRight();
+  //print(mobyDick);
 
   // 2. Count frequency of each letter.
   // To find the total number of letters, and skip spaces, numbers and other non-letter symbols, use following snippet.
@@ -340,11 +379,46 @@ Future<void> mobyDick() async {
     numLetters++;
   }
    */
-  // Don't forget to use "toLowerCase" method to count upper case and lower case letters as the same.
+  //method one
+  print('\n***MOBY DICK 2***\n');
+  var letterPattern = RegExp("[A-Za-z]"); //включає тільки літери латинського алфавіту
+  var numLetters = 0;
+  var letterPos = -1;
+  while ((letterPos = mobyDick.indexOf(letterPattern, letterPos + 1)) >= 0) {
+    numLetters++;
+  }
+  print(numLetters);
 
-  // 4. What is the balance between vowels and consonants?
+  //method two
+  var notLetterPattern = RegExp("[^A-Za-z]"); //включає все, окрім літер латинського алфавіту
+  String mobyDickLetters = mobyDick.replaceAll(notLetterPattern, "");
+  print(mobyDickLetters.length);
+
+  //Don't forget to use "toLowerCase" method to count upper case and lower case letters as the same.
+  // 3. What is the balance between vowels and consonants?
+  print('\n***MOBY DICK 3***\n');
+  numLetters = 0;
+  letterPos = -1;
+  var numberOfVowels = 0;
+  var numberOfConsonants = 0;
+  var vowels = ['a', 'e', 'y', 'i', 'u', 'o'];
+  while ((letterPos = mobyDick.indexOf(letterPattern, letterPos + 1)) >= 0) {
+    if (vowels.contains(mobyDick[letterPos].toLowerCase())){
+      numberOfVowels += 1;
+    } else {
+      numberOfConsonants += 1;
+    }
+  }
+  print('Number of vowels in "Moby Dick" novel is $numberOfVowels');
+  print('Number of consonants in "Moby Dick" novel is $numberOfConsonants');
+  print('Sum of vowels and consonants in "Moby Dick" novel is'
+      ' ${numberOfConsonants + numberOfVowels}');
 
   // 4. Count how many words are there in the novel. Use "split" method.
+  print('\n***MOBY DICK 4***\n');
+  var notLetterAndSpacePattern = RegExp("[^A-Za-z' ']"); //включає все, окрім літер латинського алфавіту та пробілів
+  var mobyDickWords = mobyDick.replaceAll(notLetterAndSpacePattern, "").split(' ');
+  print('Number of words in "Moby Dick" novel is ${mobyDickWords.length}');
 
   // 5. Count how many times each word is used in the novel. Use "split" method and "Map" collection. Word should be
   //    the key, and number of times it is used should be the value in the map.
@@ -354,4 +428,10 @@ Future<void> mobyDick() async {
   var word = 'some_word';
   wordCounts[word] = (wordCounts[word] ?? 0) + 1;
    */
+  print('\n***MOBY DICK 5***\n');
+  var wordCounts = Map<String, int>();
+  for(var word in mobyDickWords){
+    wordCounts[word] = (wordCounts[word] ?? 0) + 1;
+  }
+  print(wordCounts);
 }
