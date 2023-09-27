@@ -269,15 +269,14 @@ void strings() {
   // 15. Use list of brands and list of vowels from previous exercises. For each brand, check where it has more
   // vowels - in the beginning or in the end. Use "length" property of string to get its length and find where is the
   // middle of the word. Use "indexOf" method to find positions of the vowels.
+  //Option one. Using a loop for
   print('\n***strings15*** \n');
-  var middleOfTheWord = 0;
-  var vowelsAtTheEnd = 0;
-  var vowelsAtTheBeginning = 0;
+  print('Var1');
   for (var brand in brands) {
     brand = brand.toLowerCase();
-    vowelsAtTheEnd = 0;
-    vowelsAtTheBeginning = 0;
-    middleOfTheWord = (brand.length/2).ceil();
+    var vowelsAtTheEnd = 0;
+    var vowelsAtTheBeginning = 0;
+    var middleOfTheWord = (brand.length/2).ceil();
     for (var vowel in vowels) {
       if (brand.contains(vowel)) {
         for  (var i = 0; i < brand.length; i++ ) {
@@ -293,11 +292,116 @@ void strings() {
       }
     }
     brand = brand.toUpperCase();
+    var hasSameNumbers = (vowelsAtTheBeginning == vowelsAtTheEnd && vowelsAtTheBeginning != 0);
     if (vowelsAtTheBeginning > vowelsAtTheEnd) {
       print("The $brand has more vowels at the beginning");
     } else if (vowelsAtTheBeginning < vowelsAtTheEnd) {
       print("The $brand has more vowels at the end");
-    } else if (vowelsAtTheBeginning == vowelsAtTheEnd && vowelsAtTheBeginning != 0) {
+    } else if (hasSameNumbers) {
+      print('The name of the brane $brand has the same number of vowels'
+          ' at the beginning and at the end');
+    } else {
+      print('There are no vowels in the $brand brand name');
+    }
+  }
+
+  //Option two. Using a loop while
+  print('Var2');
+  for (var brand in brands) {
+    brand = brand.toLowerCase();
+    var vowelsAtTheEnd = 0;
+    var vowelsAtTheBeginning = 0;
+    for (var vowel in  vowels) {
+      var middleOfTheWord = (brand.length/2).ceil();
+      var lastFoundVowelIndex = brand.indexOf(vowel);
+      var hasReachedEnd = (lastFoundVowelIndex == - 1);
+      while (!hasReachedEnd) {
+        if (lastFoundVowelIndex < middleOfTheWord) {
+          vowelsAtTheBeginning += 1;
+        } else if (lastFoundVowelIndex > middleOfTheWord) {
+          vowelsAtTheEnd += 1;
+        }
+        lastFoundVowelIndex = brand.indexOf(vowel, lastFoundVowelIndex + 1);
+        hasReachedEnd = (lastFoundVowelIndex == -1);
+      }
+    }
+    brand = brand.toUpperCase();
+    var hasSameNumbers = (vowelsAtTheBeginning == vowelsAtTheEnd && vowelsAtTheBeginning != 0);
+    if (vowelsAtTheBeginning > vowelsAtTheEnd) {
+      print("The $brand has more vowels at the beginning");
+    } else if (vowelsAtTheBeginning < vowelsAtTheEnd) {
+      print("The $brand has more vowels at the end");
+    } else if (hasSameNumbers) {
+      print('The name of the brane $brand has the same number of vowels'
+          ' at the beginning and at the end');
+    } else {
+      print('There are no vowels in the $brand brand name');
+    }
+  }
+
+  //Option three. Using a loop while
+  print('Var3');
+  for (var brand in brands) {
+    brand = brand.toLowerCase();
+    var vowelsAtTheEnd = 0;
+    var vowelsAtTheBeginning = 0;
+    for (var vowel in  vowels) {
+      var middleOfTheWord = (brand.length/2).ceil();
+      var lastFoundVowelIndex = brand.indexOf(vowel);
+      //var hasReachedEnd = (lastFoundVowelIndex == - 1);
+      while (lastFoundVowelIndex != -1) {
+        if (lastFoundVowelIndex < middleOfTheWord) {
+          vowelsAtTheBeginning += 1;
+        } else if (lastFoundVowelIndex > middleOfTheWord) {
+          vowelsAtTheEnd += 1;
+        }
+        lastFoundVowelIndex = brand.indexOf(vowel, lastFoundVowelIndex + 1);
+       // hasReachedEnd = (lastFoundVowelIndex == -1);
+      }
+    }
+    brand = brand.toUpperCase();
+    var hasSameNumbers = (vowelsAtTheBeginning == vowelsAtTheEnd && vowelsAtTheBeginning != 0);
+    if (vowelsAtTheBeginning > vowelsAtTheEnd) {
+      print("The $brand has more vowels at the beginning");
+    } else if (vowelsAtTheBeginning < vowelsAtTheEnd) {
+      print("The $brand has more vowels at the end");
+    } else if (hasSameNumbers) {
+      print('The name of the brane $brand has the same number of vowels'
+          ' at the beginning and at the end');
+    } else {
+      print('There are no vowels in the $brand brand name');
+    }
+  }
+
+  //Option four. Using a loop do-while
+  print('Var4');
+  for (var brand in brands) {
+    brand = brand.toLowerCase();
+    var vowelsAtTheEnd = 0;
+    var vowelsAtTheBeginning = 0;
+    var middleOfTheWord = (brand.length / 2).ceil();
+    for (var vowel in vowels) {
+      var lastFoundVowelIndex = brand.indexOf(vowel);
+      var isVowelInBrandName = (lastFoundVowelIndex != -1);
+      do {
+        var moreVowelsAtTheBeginning = (lastFoundVowelIndex < middleOfTheWord);
+        var moreVowelsAtTheEnd = (lastFoundVowelIndex > middleOfTheWord);
+        if (isVowelInBrandName && moreVowelsAtTheBeginning) {
+          vowelsAtTheBeginning += 1;
+        } else if (isVowelInBrandName && moreVowelsAtTheEnd) {
+          vowelsAtTheEnd += 1;
+        }
+        lastFoundVowelIndex = brand.indexOf(vowel, lastFoundVowelIndex + 1);
+      } while (lastFoundVowelIndex != -1);
+    }
+    brand = brand.toUpperCase();
+    var hasSameNumbers =
+        (vowelsAtTheBeginning == vowelsAtTheEnd && vowelsAtTheBeginning != 0);
+    if (vowelsAtTheBeginning > vowelsAtTheEnd) {
+      print("The $brand has more vowels at the beginning");
+    } else if (vowelsAtTheBeginning < vowelsAtTheEnd) {
+      print("The $brand has more vowels at the end");
+    } else if (hasSameNumbers) {
       print('The name of the brane $brand has the same number of vowels'
           ' at the beginning and at the end');
     } else {
@@ -433,5 +537,5 @@ Future<void> mobyDick() async {
   for(var word in mobyDickWords){
     wordCounts[word] = (wordCounts[word] ?? 0) + 1;
   }
-  print(wordCounts);
+  //print(wordCounts);
 }
