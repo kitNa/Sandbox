@@ -381,9 +381,11 @@ void strings() {
     var vowelsAtTheBeginning = 0;
     var middleOfTheWord = (brand.length / 2).ceil();
     for (var vowel in vowels) {
-      var lastFoundVowelIndex = brand.indexOf(vowel);
-      var isVowelInBrandName = (lastFoundVowelIndex != -1);
+      var lastFoundVowelIndex = -1;
+      var startSearchPos = 0;
       do {
+        lastFoundVowelIndex = brand.indexOf(vowel, startSearchPos);
+        var isVowelInBrandName = (lastFoundVowelIndex != -1);
         var moreVowelsAtTheBeginning = (lastFoundVowelIndex < middleOfTheWord);
         var moreVowelsAtTheEnd = (lastFoundVowelIndex > middleOfTheWord);
         if (isVowelInBrandName && moreVowelsAtTheBeginning) {
@@ -391,7 +393,7 @@ void strings() {
         } else if (isVowelInBrandName && moreVowelsAtTheEnd) {
           vowelsAtTheEnd += 1;
         }
-        lastFoundVowelIndex = brand.indexOf(vowel, lastFoundVowelIndex + 1);
+        startSearchPos = lastFoundVowelIndex + vowel.length;
       } while (lastFoundVowelIndex != -1);
     }
     brand = brand.toUpperCase();
@@ -495,8 +497,16 @@ Future<void> mobyDick() async {
 
   //method two
   var notLetterPattern = RegExp("[^A-Za-z]"); //включає все, окрім літер латинського алфавіту
-  String mobyDickLetters = mobyDick.replaceAll(notLetterPattern, "");
+  var mobyDickLetters = mobyDick.replaceAll(notLetterPattern, "").toLowerCase().split('');
   print(mobyDickLetters.length);
+
+  var mobyDickLettersCount = Map<String, int>();
+  for(var letter in mobyDickLetters){
+    mobyDickLettersCount[letter] = (mobyDickLettersCount[letter] ?? 0) + 1;
+  }
+  print('There are such count of letter in MobyDick novel $mobyDickLettersCount');
+
+  print(mobyDickLettersCount.runtimeType);
 
   //Don't forget to use "toLowerCase" method to count upper case and lower case letters as the same.
   // 3. What is the balance between vowels and consonants?
@@ -520,7 +530,7 @@ Future<void> mobyDick() async {
 
   // 4. Count how many words are there in the novel. Use "split" method.
   print('\n***MOBY DICK 4***\n');
-  var notLetterAndSpacePattern = RegExp("[^A-Za-z' ']"); //включає все, окрім літер латинського алфавіту та пробілів
+  var notLetterAndSpacePattern = RegExp("[^A-Za-z ]"); //включає все, окрім літер латинського алфавіту та пробілів
   var mobyDickWords = mobyDick.replaceAll(notLetterAndSpacePattern, "").split(' ');
   print('Number of words in "Moby Dick" novel is ${mobyDickWords.length}');
 
