@@ -1,5 +1,8 @@
 #Тут використовується GLOB синтаксис для визначення шаблонів файлових шляхів (частина POSIX стандарту)
 
+# Temp files
+*~
+
 # Files and directories created by pub.
 .dart_tool/
 .packages
