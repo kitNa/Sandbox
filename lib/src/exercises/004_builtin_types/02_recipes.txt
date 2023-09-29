@@ -1,0 +1,57 @@
+--------------------------------------------------------------------------------
+Omlette
+Eggs : 2
+Milk : 0.1
+Cheese : 1
+Sausage : 2
+Salt : 0.1
+Pepper : 0.1
+--------------------------------------------------------------------------------
+Pancakes
+Eggs : 1
+Milk : 1
+Flour : 1
+Salt : 0.1
+Pepper : 0.1
+--------------------------------------------------------------------------------
+Fried eggs
+Eggs : 2
+Salt : 0.1
+Pepper : 0.1
+--------------------------------------------------------------------------------
+Scrambled eggs
+Eggs : 2
+Milk : 0.1
+Salt : 0.1
+Pepper : 0.1
+--------------------------------------------------------------------------------
+Chorizo & mozzarella gnocchi bake
+Gnocchi : 1
+Chorizo : 1
+Tomato : 1
+Mozzarella : 1
+Salt : 0.1
+Pepper : 0.1
+--------------------------------------------------------------------------------
+Easy chocolate fudge cake
+Butter : 1
+Sugar : 1
+Eggs : 2
+Flour : 1
+Cocoa : 1
+Baking powder : 0.1
+Salt : 0.1
+Milk : 0.1
+Chocolate : 1
+--------------------------------------------------------------------------------
+Pizza
+Flour : 1
+Yeast : 0.1
+Salt : 0.1
+Sugar : 0.1
+Olive oil : 0.1
+Tomato : 1
+Mozzarella : 1
+Pepperoni : 1
+Salt : 0.1
+Pepper : 0.1
