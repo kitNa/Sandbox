@@ -72,7 +72,7 @@ The best financial app, but can you please add ability to divide incomes between
 круто, що можна один раз заплатити і використовувати один обліковий запис на пару з партнером, або друзями, якщо у вас 
 є спільний рахунок, більше можливостей. Дякую, дуже корисний застосунок, 5 зірок.
 
-.15 Kostya Romanenko
+1.15 Kostya Romanenko
 27 серпня 2023 р.
 Все гуд працює, змога зберігати данні в облаці - топ, інструмент гнучкий і покриває майже всі запити від нього. Єдине що,
 не вистачає функціоналу по фільтрації підгруп (тобто у загальних групах, що знаходяться у витратах/доходах, є свої підгрупи
@@ -456,7 +456,7 @@ Bazimo
 https://play.google.com/store/apps/details?id=com.realbyteapps.moneymanagerfree
 
 3.1 Job Eye
-August 7, 2023
+7 серпня 2023 р.
 I can't modify currency exchange price per transaction. I can't create transaction template and place it to home screen as shortcut
 
 3.2 Mikhailo Maksimuk
@@ -490,8 +490,8 @@ I need more subcategories Category -> Subcategory -> Subcategory -> Subcategory
 3.9 Oleksandr Dzyubchik
 25 травня 2023 р.
 Дуже зручний менеджер витрат
-3.10 
-Andrii Sem
+
+3.10 Andrii Sem
 29 квітня 2023 р.
 Після оновлення витрати за день не сумуються (відображаються неначе це перекази).
 
@@ -615,8 +615,7 @@ Please, make that the total money of previous month is the income of next, it wi
 2 серпня 2017 р.
 Doesn't work properly with more than one currency. App summarize Hryvnias and Dollars in one amount. It's critical issue for me.
 
-3.50
-Користувач Google
+3.50 Користувач Google
 28 червня 2016 р.
 Песмотрев массу программ, остановился на этой. Есть все, что я искал в такого рода программе: бюджетирование, аналитика не только в разрезе категорий, но и подкатегорий. Очень удобно отражаются даты/дни завтрат. И ввод данных продуман лучше, чем у других.
 
@@ -624,8 +623,7 @@ Doesn't work properly with more than one currency. App summarize Hryvnias and Do
 Складний, але багатий інтерфейс (подивитися). Здається, це укр. Найкращий?(багато повідомлень про це). Парсить сповіщення(смс?) від банку. Доступний експорт звітів у файл!
 https://play.google.com/store/apps/details?id=com.rammigsoftware.bluecoins
 
-4.1
-Ілля В
+4.1 Ілля В
 18 липня 2023 р.
 Найкраща безкоштовна версія подібних додатків. Управління складне, але за короткий час звикаєш. І функціоналу багато. Прям забагато навіть.
 
@@ -781,7 +779,7 @@ https://play.google.com/store/apps/details?id=ru.innim.my_finance
 1 вересня 2023 р.
 Дуже зручний додаток. Мені ще б хотілося деякої автоматизації: автрматична взаємодія з моїм банком.
 
-5.2roman detsyk
+5.2 roman detsyk
 13 серпня 2023 р.
 Програмка варта уваги, єдине, що бракує, це налаштування валютних курсів
 
