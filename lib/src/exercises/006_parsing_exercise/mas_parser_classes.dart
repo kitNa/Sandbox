@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:mongo_dart/mongo_dart.dart';
 
 Future<void> main(List<String> args) async {
@@ -15,15 +16,25 @@ Future<void> main(List<String> args) async {
   final List<App> apps = parse(lines);
 
   // store to DB
+  print('connecting to DB ....');
   final db = await Db.create(dbUri);
+  print('connected to DB');
   await db.open();
-  final collection = db.collection('apps');
+  final appsCollection = db.collection('apps');
 
-
-  // TODO: insert apps and comments to DB
-  // ------------------------------------
+  for (var app in apps) {
+    // insert app
+    await appsCollection.insertOne(app.toMongoMap());
+    print('app inserted: ${app.name}');
+    for (var comment in app.comments) {
+      // insert comment
+      await db.collection('comments').insertOne(comment.toMongoMap(app));
+      print('  comment inserted: ${comment.appIdx}.${comment.commentIdx}');
+    }
+  }
 
   await db.close();
+  print('done');
 }
 
 List<App> parse(List<String> lines) {
@@ -56,14 +67,13 @@ List<App> parse(List<String> lines) {
     }
   }
 
-  /*
   for (var app in apps) {
     print('app: ${app.name}, comment: ${app.comment}');
     for (var comment in app.comments) {
-      print('  comment: ${comment.appIdx}.${comment.commentIdx} (${comment.author}) ${comment.date.toIso8601String().substring(0, 10)} - ${comment.text}');
+      print(
+          '  comment: ${comment.appIdx}.${comment.commentIdx} (${comment.author}) ${comment.date.toIso8601String().substring(0, 10)} - ${comment.text}');
     }
   }
-   */
 
   return apps;
 }
@@ -72,21 +82,54 @@ class App {
   static final RegExp appHeaderPattern =
       RegExp(r'^\s*<h2>(?<idx>\d+)\.\s+(?<name>.+)\s+-\s+(?<rating>\d\.\d),\s+\b(?<downloads>.*)\b.*</?h2>\s*$');
   static final RegExp numDownloadsPattern = RegExp(r'(?<num>\d+)(?<sfx>mln|thd)');
+  static final RegExp appIdPattern = RegExp(r'https://play\.google\.com/store/apps/details\?id=(?<appId>.*)\b');
+  static final Uuid uuidGen = Uuid();
 
   final int idx;
   final String name;
   final double rating;
   final int numDownloads;
   final List<Comment> comments;
-  String comment;
+  String _comment = '';
+  String _uuid = '';
+  String _appId = '';
 
   App(
       {required this.idx,
       required this.name,
       required this.rating,
       required this.numDownloads,
-      required this.comments,
-      this.comment = ''});
+      required this.comments}) {
+    _uuid = uuidGen.v4();
+  }
+
+  String get comment => _comment;
+
+  String get uuid => _uuid;
+
+  String get appId => _appId;
+
+  set comment(String comment) {
+    _comment = comment.trim();
+    var match = appIdPattern.firstMatch(comment);
+    if (match != null) {
+      _appId = match.group(1)!;
+    }
+  }
+
+  Map<String, Object?> toMongoMap() {
+    return {
+      'name': name,
+      'os': 'ANDROID',
+      'appId': _appId,
+      'description': comment,
+      'rating': rating,
+      'numReviews': null,
+      'numDownloads': numDownloads,
+      'ratings': [],
+      'uuid': uuid
+    };
+  }
 
   static bool isHeader(String line) {
     return appHeaderPattern.hasMatch(line);
@@ -117,6 +160,7 @@ class App {
 class Comment {
   static final RegExp commentAuthorPattern = RegExp(r'^(?<appIdx>\d+)\.(?<commendIdx>\d+)\s+(?<author>.+)$');
   static final RegExp commentDateUaPattern = RegExp(r'^(?<day>\d+)\s+(?<month>[А-яа-яіїє]+)\s+(?<year>\d+).*$');
+  static final Uuid uuidGen = Uuid();
 
   final int appIdx;
   final int commentIdx;
@@ -125,6 +169,28 @@ class Comment {
   String text;
 
   Comment({required this.appIdx, required this.commentIdx, required this.author, required this.date, this.text = ''});
+
+  Map<String, Object?> toMongoMap(App app) {
+    return {
+      'app': {
+        'uuid': app.uuid,
+        'name': app.name,
+        'appId': app.appId,
+      },
+      'author': author,
+      'country': "UNKNOWN-IMPORTED",
+      'date': [
+        date.year,
+        date.month,
+        date.day,
+      ],
+      'numStars': null,
+      'numLikes': null,
+      'text': text,
+      'categories': [],
+      'uuid': uuidGen.v4()
+    };
+  }
 
   static bool isAuthor(String line) {
     return commentAuthorPattern.hasMatch(line);
