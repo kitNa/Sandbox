@@ -8,30 +8,51 @@ void main() {
     var [expIdx, expName, expRtng, expDwnld] = [1, '1Money', 4.6, 5000000];
 
     // when: parse valid app header
-    var (idx, appName, rating, numDownloads) = parseAppHeader(validAppHeader);
+    ({
+      int idx,
+      String appName,
+      double rating,
+      int numDownloads
+    }) actualParsingResult = parseAppHeader(validAppHeader) as ({
+      int idx,
+      String appName,
+      double rating,
+      int numDownloads
+    });
 
     // then: parsed values returned
-    print('idx: $idx, appName: $appName, rating: $rating, numDownloads: $numDownloads');
-    expect(idx, expIdx);
-    expect(appName, expName);
-    expect(rating, expRtng);
-    expect(numDownloads, expDwnld);
+    print('idx: ${actualParsingResult.idx}, '
+        'appName:  ${actualParsingResult.appName}, '
+        'rating:  ${actualParsingResult.rating}, '
+        'numDownloads:  ${actualParsingResult.numDownloads}');
+    expect(actualParsingResult.idx, expIdx);
+    expect(actualParsingResult.appName, expName);
+    expect(actualParsingResult.rating, expRtng);
+    expect(actualParsingResult.numDownloads, expDwnld);
   });
 
   test("returns magic values for invalid app header", () {
     // given: invalid app header
     var invalidAppHeader = 'blah-blah-blah';
-    var [expInvalidIdx, expInvalidAppName, expInvalidRating, expInvalidNumDownloads] = [-1, '<INVALID_HEADER>', -1, -1];
+    var [
+      expInvalidIdx,
+      expInvalidAppName,
+      expInvalidRating,
+      expInvalidNumDownloads
+    ] = [-1, '<INVALID_HEADER>', -1, -1];
 
     // when: parse invalid app header
-    var (idx, appName, rating, numDownloads) = parseAppHeader(invalidAppHeader);
+    var (idx, appName, rating, numDownloads) = parseAppHeader(invalidAppHeader)
+        as (int idx, String appName, double rating, int numDownloads);
 
     // then: magic values returned
-    print('idx: $idx, appName: $appName, rating: $rating, numDownloads: $numDownloads');
+    print(
+        'idx: $idx, appName: $appName, rating: $rating, numDownloads: $numDownloads');
     expect(idx, expInvalidIdx);
     expect(appName, expInvalidAppName);
     expect(rating, expInvalidRating);
-    expect(numDownloads, expInvalidNumDownloads, reason: 'invalid numDownloads should be -1');
+    expect(numDownloads, expInvalidNumDownloads,
+        reason: 'invalid numDownloads should be -1');
   });
 
   test('parses valid comment header', () {
@@ -40,7 +61,8 @@ void main() {
     var [expAppIdx, expCommentIdx, expAuthor] = [1, 5, 'Marina Kolbina'];
 
     // when: parse valid comment header
-    var (appIdx, commentIdx, author) = parseCommentAuthor(validCommentHeader);
+    var (appIdx, commentIdx, author) = parseCommentAuthor(validCommentHeader)
+    as (int appIdx, int commentIdx, String author);
 
     // then: parsed values returned
     print('appIdx: $appIdx, commentIdx: $commentIdx, author: $author');
@@ -52,10 +74,15 @@ void main() {
   test('returns magic values for invalid comment header', () {
     // given: invalid comment header
     var invalidCommentHeader = 'blah-blah-blah';
-    var [expInvalidAppIdx, expInvalidCommentIdx, expInvalidAuthor] = [-1, -1, '<INVALID_COMMENT_AUTHOR>'];
+    var [
+      expInvalidAppIdx,
+      expInvalidCommentIdx,
+      expInvalidAuthor
+    ] = [-1, -1, '<INVALID_COMMENT_AUTHOR>'];
 
     // when: parse invalid comment header
-    var (appIdx, commentIdx, author) = parseCommentAuthor(invalidCommentHeader);
+    var (appIdx, commentIdx, author) = parseCommentAuthor(invalidCommentHeader)
+    as (int appIdx, int commentIdx, String author);
 
     // then: magic values returned
     print('appIdx: $appIdx, commentIdx: $commentIdx, author: $author');
@@ -70,7 +97,8 @@ void main() {
     var [expDay, expMonth, expYear] = [12, Month.sep, 2021];
 
     // when: parse valid comment date
-    var (day, month, year) = parseCommentDate(validCommentDate);
+    var (day, month, year) = parseCommentDate(validCommentDate)
+    as (int day, String month, int year);
 
     // then: parsed values returned
     print('day: $day, month: $month, year: $year');
