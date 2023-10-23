@@ -27,7 +27,7 @@ Future<void> main(List<String> args) async {
       var newAppRecord = parseAppHeader(line);
       var newApp = App(
           idx: newAppRecord.idx,
-          name: newAppRecord.appName,
+          name: newAppRecord.name,
           rating: newAppRecord.rating,
           numDownloads: newAppRecord.numDownloads,
           comments: []);
@@ -72,10 +72,13 @@ Future<void> main(List<String> args) async {
 ///
 /// Returns: (idx, appName, numDownloads) - idx > 0 indicates valid app header,
 /// idx < 0 indicates invalid app header
-({int idx, String appName, double rating, int numDownloads}) parseAppHeader(String line) {
+App parseAppHeader(String line) {
   var match = appHeaderPattern.firstMatch(line);
+  var newApp;
   if (match == null) {
-    return (idx: -1, appName: '<INVALID_HEADER>', rating: -1, numDownloads: -1);
+    newApp = App(
+    idx: -1, name: '<INVALID_HEADER>', rating: -1, numDownloads: -1, comments: []);
+    return newApp;
   }
   var [idx, appName, rating, numDownloadsWithSfx] = match.groups([1, 2, 3, 4]);
   var numDownloadsMatch = numDownloadsPattern.firstMatch(numDownloadsWithSfx!);
@@ -89,7 +92,9 @@ Future<void> main(List<String> args) async {
       break;
   }
   var numDownloads = int.parse(numDownloadsStr!);
-  return (idx: int.parse(idx!), appName: appName!, rating: double.parse(rating!), numDownloads: numDownloads);
+  newApp = App(
+idx:  int.parse(idx!), name:  appName!, rating: double.parse(rating!), numDownloads: numDownloads, comments: []);
+  return newApp;
 }
 
 bool isAppHeader(String line) {
