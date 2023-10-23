@@ -119,6 +119,21 @@ void listIndexAccessExercises() {
   // 1. Create a printable picture of a house using lists.
   print("\n***listIndexAccessExercises1***\n");
 
+  var roofWidth = 5;
+  var wallWidth = roofWidth - 2;
+  var rows = [];
+  for (var i = 1; i <= roofWidth; i++) {
+    var row = " " * (roofWidth - i) + "* " * i;
+    rows.add(row);
+  }
+  for (var i = 1; i <= wallWidth; i++) {
+    var row = "  " + "* " * wallWidth;
+    rows.add(row);
+  }
+  for (var row in rows) {
+    print(row);
+  }
+
   // 2. Create a list of 10 elements with animals. Print only those animals that start with vowels. Use for loop
   // with index.
   // var animals = ['cat', .....];
@@ -268,8 +283,45 @@ void constListExercises() {
 
 void listLengthExercises() {
   // list.length - read-only property to get list length (number of elements)
+  const List birds = [
+    'blackbird',
+    'bluetit',
+    'buzzard',
+    'crow',
+    'cuckoo',
+  ];
+  const List reptiles = [
+    'chameleon',
+    'crocodile',
+    'lizard',
+    'snake',
+    'rattlesnake',
+    'rattlesnake',
+  ];
 
   // 1. Compare lengths of lists from constListExercises#1 (birds, reptiles). Print the longest list.
+  //print("${birds.length.compareTo(reptiles.length)?"ddd":"dff"}");
+  print("\n***listLengthExercises1***\n");
+  var compareLength = birds.length.compareTo(reptiles.length);
+  print(
+      "${(compareLength == 0) ? "The lists have the same length"
+          : (compareLength == 1) ? "The birds list is longer"
+          : (compareLength == -1) ? "The reptiles list is longer"
+          : throw Exception("Lists cannot be compared")}"
+  );
+  switch (birds.length.compareTo(reptiles.length)) {
+    case -1:
+      print("The reptiles list is longer");
+      break;
+    case 0:
+      print("The lists have the same length");
+      break;
+    case 1:
+      print("The birds list is longer");
+      break;
+    default:
+      throw Exception("Lists cannot be compared");
+  }
 }
 
 void listInitializersExercises() {
@@ -277,7 +329,7 @@ void listInitializersExercises() {
 
   // 1. Create and print a list of movie heroes/characters. Define list as "<String>[]" syntax;
   print("\n***listInitializersExercises1***\n");
-  var characters1  = <String>[
+  var characters1 = <String>[
     'vinks',
     'pinkie pie',
     'peppa pig',
