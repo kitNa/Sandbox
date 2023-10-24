@@ -103,6 +103,7 @@ void main() {
   constListExercises();
   listLengthExercises();
   listInitializersExercises();
+  listMethods();
 }
 
 void listIndexAccessExercises() {
@@ -403,4 +404,45 @@ void listInitializersExercises() {
   List.copyRange(animals, 0, birds, 0, 3);
   List.copyRange(animals, 3, reptiles, 3, 5);
   print(animals);
+
+
+  // 5. Do same as in #4, but now use "filled" constructor:
+  //  List.filled(99, 'broccoli');
+
+
+  // 6. Create a list of 100 elements, where each element is an item position + 100.
+  //  For example, [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, ...]
+  // Use "generate" constructor:
+  // List.generate(100, (pos) => "Hello $pos");
+
+
+  // 7. Create unmodifiable copy of list of animals. And try to modify it, observe the error.
+  // Use unmodifiable list constructor:
+  // var unmodifiableList = List.unmodifiable(existingList);
+}
+
+void listMethods() {
+  // https://dart.dev/guides/libraries/library-tour#lists
+
+
+  // 1. Create a list of numbers from 1 to 10 (use "List.generate" constructor).
+  // Reverse the list with ".reversed" property to reverse elements.
+
+
+  // 2. Given a list of elements ['one', 'two', 'three', 'four', 'five'].
+  //  Using "indexed" and "forEach" print elements with their positions:
+  //  0: one
+  //  1: two
+  //  and so on.
+  // list.indexed.forEach((record) => print("index=${record.$1}, value=${record.$2}"));
+
+
+  // 3. Use list of number strings from #2. Print first list element and last one. \
+  // Use "first" and "last" properties.
+
+
+  // 4. Create myChildren list with single "Margo" item there. Get "Margo" into
+  // a String variable from the list using "single" property.
+  // var singleString = ['one'].single;
+
 }
