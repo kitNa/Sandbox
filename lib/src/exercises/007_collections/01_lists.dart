@@ -120,6 +120,23 @@ void listIndexAccessExercises() {
   // 1. Create a printable picture of a house using lists.
   print("\n***listIndexAccessExercises1***\n");
 
+  var roofWidth = 5;
+  var wallWidth = roofWidth - 2;
+  var rows = [];
+  for (var i = 1; i <= roofWidth; i++) {
+    // var row = " " * (roofWidth - i) + "* " * i;
+    var row = "${' ' * (roofWidth - i)}${'* ' * i}";
+    rows.add(row);
+  }
+  for (var i = 1; i <= wallWidth; i++) {
+    // var row = "  " + "* " * wallWidth;
+    var row = "  ${'* ' * wallWidth}";
+    rows.add(row);
+  }
+  for (var row in rows) {
+    print(row);
+  }
+
   // 2. Create a list of 10 elements with animals. Print only those animals that start with vowels. Use for loop
   // with index.
   // var animals = ['cat', .....];
@@ -269,8 +286,46 @@ void constListExercises() {
 
 void listLengthExercises() {
   // list.length - read-only property to get list length (number of elements)
+  const List birds = [
+    'blackbird',
+    'bluetit',
+    'buzzard',
+    'crow',
+    'cuckoo',
+  ];
+  const List reptiles = [
+    'chameleon',
+    'crocodile',
+    'lizard',
+    'snake',
+    'rattlesnake',
+    'rattlesnake',
+  ];
 
   // 1. Compare lengths of lists from constListExercises#1 (birds, reptiles). Print the longest list.
+  //print("${birds.length.compareTo(reptiles.length)?"ddd":"dff"}");
+  print("\n***listLengthExercises1***\n");
+  var compareLength = birds.length.compareTo(reptiles.length);
+  print((compareLength == 0)
+      ? "The lists have the same length"
+      : (compareLength == 1)
+          ? "The birds list is longer"
+          : (compareLength == -1)
+              ? "The reptiles list is longer"
+              : throw Exception("Lists cannot be compared"));
+  switch (birds.length.compareTo(reptiles.length)) {
+    case -1:
+      print("The reptiles list is longer");
+      break;
+    case 0:
+      print("The lists have the same length");
+      break;
+    case 1:
+      print("The birds list is longer");
+      break;
+    default:
+      throw Exception("Lists cannot be compared");
+  }
 }
 
 void listInitializersExercises() {
@@ -278,7 +333,7 @@ void listInitializersExercises() {
 
   // 1. Create and print a list of movie heroes/characters. Define list as "<String>[]" syntax;
   print("\n***listInitializersExercises1***\n");
-  var characters1  = <String>[
+  var characters1 = <String>[
     'vinks',
     'pinkie pie',
     'peppa pig',
@@ -302,7 +357,7 @@ void listInitializersExercises() {
   print("\n***listInitializersExercises2***\n");
   var upperCaseCharacters = List.of(characters);
 
-// ПОЧМУ НЕ РАБОТАЕТ???
+// Не підходить, бо тут модифікується змінна, а не елемент списку
 //  for(var character in upperCaseCharacters) {
 //    character = character.toUpperCase();
 //  }
@@ -311,7 +366,7 @@ void listInitializersExercises() {
     upperCaseCharacters[i] = upperCaseCharacters[i].toUpperCase();
   }
 
-  upperCaseCharacters.forEach((character) => {print(character)});
+  upperCaseCharacters.forEach((character) => print(character));
 
   // 3. Make a fixed-size list (non-growable) of bad passwords with copy constructor:
   // var fixedList = List.of(existingList, growable: false);
@@ -353,29 +408,41 @@ void listInitializersExercises() {
   List.copyRange(animals, 3, reptiles, 3, 5);
   print(animals);
 
-
   // 5. Do same as in #4, but now use "filled" constructor:
   //  List.filled(99, 'broccoli');
-
+  print("\n***listInitializersExercises5***\n");
+  animals = List.filled(5, 'animals');
+  print(animals);
 
   // 6. Create a list of 100 elements, where each element is an item position + 100.
   //  For example, [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, ...]
   // Use "generate" constructor:
   // List.generate(100, (pos) => "Hello $pos");
-
+  print("\n***listInitializersExercises6***\n");
+  var listOfNumbers = List.generate(100, (pos) => pos + 100);
+  print(listOfNumbers);
 
   // 7. Create unmodifiable copy of list of animals. And try to modify it, observe the error.
   // Use unmodifiable list constructor:
   // var unmodifiableList = List.unmodifiable(existingList);
+  print("\n***listInitializersExercises7***\n");
+  var unmodifiableAnimalsList = List.unmodifiable(animals);
+  //unmodifiableAnimalsList.add("new animal"); -  Runtime error: Cannot add to an unmodifiable list
+  unmodifiableAnimalsList += birds;
+  print(unmodifiableAnimalsList);
+  unmodifiableAnimalsList.add("new animal");
+  print(unmodifiableAnimalsList);
 }
 
 void listMethods() {
   // https://dart.dev/guides/libraries/library-tour#lists
 
-
   // 1. Create a list of numbers from 1 to 10 (use "List.generate" constructor).
   // Reverse the list with ".reversed" property to reverse elements.
-
+  print("\n***listMethods1***\n");
+  var listOfNumbers = List.generate(10, (index) => index + 1);
+  var reversedList = listOfNumbers.reversed;
+  print(reversedList);
 
   // 2. Given a list of elements ['one', 'two', 'three', 'four', 'five'].
   //  Using "indexed" and "forEach" print elements with their positions:
@@ -383,14 +450,33 @@ void listMethods() {
   //  1: two
   //  and so on.
   // list.indexed.forEach((record) => print("index=${record.$1}, value=${record.$2}"));
-
+  print("\n***listMethods2***\n");
+  var stringListOfNumbers = [
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+    'ten'
+  ];
+  stringListOfNumbers.indexed
+      .forEach((record) => print("${record.$1 + 1} : ${record.$2}"));
 
   // 3. Use list of number strings from #2. Print first list element and last one. \
   // Use "first" and "last" properties.
-
+  print("\n***listMethods3***\n");
+  print("First list element is: ${stringListOfNumbers.first}"
+      "\nLast list element is: ${stringListOfNumbers.last}");
 
   // 4. Create myChildren list with single "Margo" item there. Get "Margo" into
   // a String variable from the list using "single" property.
   // var singleString = ['one'].single;
-
+  print("\n***listMethods4***\n");
+  var myChildren = ['Margo'];
+  var singleString = myChildren.single;
+  print(singleString);
 }
