@@ -366,7 +366,7 @@ void listInitializersExercises() {
     upperCaseCharacters[i] = upperCaseCharacters[i].toUpperCase();
   }
 
-  upperCaseCharacters.forEach((character) => {print(character)});
+  upperCaseCharacters.forEach((character) => print(character));
 
   // 3. Make a fixed-size list (non-growable) of bad passwords with copy constructor:
   // var fixedList = List.of(existingList, growable: false);
@@ -419,7 +419,7 @@ void listInitializersExercises() {
   // Use "generate" constructor:
   // List.generate(100, (pos) => "Hello $pos");
   print("\n***listInitializersExercises6***\n");
-  var listOfNumbers = List.generate(100, (pos) => "${pos + 100}");
+  var listOfNumbers = List.generate(100, (pos) => pos + 100);
   print(listOfNumbers);
 
   // 7. Create unmodifiable copy of list of animals. And try to modify it, observe the error.
@@ -430,6 +430,8 @@ void listInitializersExercises() {
   //unmodifiableAnimalsList.add("new animal"); -  Runtime error: Cannot add to an unmodifiable list
   unmodifiableAnimalsList += birds;
   print(unmodifiableAnimalsList);
+  unmodifiableAnimalsList.add("new animal");
+  print(unmodifiableAnimalsList);
 }
 
 void listMethods() {
@@ -439,7 +441,8 @@ void listMethods() {
   // Reverse the list with ".reversed" property to reverse elements.
   print("\n***listMethods1***\n");
   var listOfNumbers = List.generate(10, (index) => index + 1);
-  print(listOfNumbers.reversed);
+  var reversedList = listOfNumbers.reversed;
+  print(reversedList);
 
   // 2. Given a list of elements ['one', 'two', 'three', 'four', 'five'].
   //  Using "indexed" and "forEach" print elements with their positions:
@@ -474,6 +477,6 @@ void listMethods() {
   // var singleString = ['one'].single;
   print("\n***listMethods4***\n");
   var myChildren = ['Margo'];
-  var singleString = ['Margo'].single;
+  var singleString = myChildren.single;
   print(singleString);
 }
