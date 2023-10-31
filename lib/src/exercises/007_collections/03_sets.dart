@@ -28,9 +28,24 @@ void addDups() {
   phoneBrands.add(newBrand1);
   phoneBrands.add(newBrand2); //item was added only once
   phoneBrands.add('Meizu'); //item was added only once
-  phoneBrands.add(
-      'Меіzu'); //an element with letters of a different alphabet was added successfully
+  phoneBrands.add('Меіzu'); //an element with letters of a different alphabet was added successfully
   print(phoneBrands);
+
+  //1.1 Додати в сет усі унікальні слова деякого тексту.
+  var text = '''
+  Стара жінка зсунула вниз окуляри й, дивлячись поверх них, роззирнулася по 
+  кімнаті; потім підняла окуляри на чоло й поглянула з-під них. Вона пішла до
+   відчинених дверей, стала на порозі й повела оком по грядках помідорів,
+    зарослих дурманом, — то був її "город". Тома не видно ніде. Раптом позад 
+    неї щось шурхнуло, і вона обернулася — саме вчасно, щоб схопити за полу 
+    куртки невеликого хлопчиська й не дати йому втекти.
+  ''';
+
+  print('\n***addDups1.1***\n');
+  var words = text.toLowerCase().split(' ');
+  print(words.length);
+  var uniqueWords = words.toSet();
+  print(uniqueWords.length);
 
   // 2. Create a set of animals from literal where duplicates are defined.
   // Observe result.
@@ -74,6 +89,13 @@ void noOrdering() {
   print("Fifth element is: ${letters.elementAt(4)}"); //c
   print("Last element is: ${letters.last}"); //i
 
+  //2.2 Додати нові елементи і перевірити порядок
+  letters.addAll(['k', 'l', 'm', 'n']);
+  print(letters);
+  print("First element is: ${letters.first}");
+  print("Fifth element is: ${letters.elementAt(4)}");
+  print("Last element is: ${letters.last}");
+
   // 3. Try using "elementAt" on "letters" set from previous exercise. It works
   // the same as "[index]" operator on lists. Note that usually "elementAt"
   // should not be used on sets, as it doesn't make sense, and no guarantees.
@@ -103,6 +125,7 @@ void emptySet() {
   // 1. Create empty set. Fill it with toys. Observe result.
   print('\n***emptySet1***\n');
   var toysList = ['boll', 'car', 'doll', 'cat', 'pyramid'];
+
   //var toysSet = {};
   //toysSet.addAll(toysList); //The argument type 'List<String>' can't be assigned to the parameter type 'Map<dynamic, dynamic>'.
 
@@ -141,5 +164,5 @@ void setOperators() {
 
   // 5. Find "blue" in the set of your favorite colors. Use method "lookup". Note that it returns element, not boolean.
   print('\n***setOperators1***\n');
-  print('Is blue in myFavoriteColors set? ${myFavoriteColors.lookup('blue')}');
+  print('MyFavoriteColors set has ${myFavoriteColors.lookup('blue')} ');
 }
