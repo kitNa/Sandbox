@@ -10,8 +10,8 @@ void main() {
 
   modifications();
   retrievals();
-  zipping();
   sorting();
+  zipping();
 }
 
 void modifications() {
@@ -178,7 +178,7 @@ void sorting() {
   // 3. Sort them in reverse alphabetical order by name. (don't use "reversed", define your comparator). Hint: use
   //   "compareTo" and negate result.
   print('\n***sorting3***\n');
-  friends.sort((a, b) => a.compareTo(b) * (-1));
+  friends.sort((a, b) => -a.compareTo(b));
   print(friends);
 }
 
