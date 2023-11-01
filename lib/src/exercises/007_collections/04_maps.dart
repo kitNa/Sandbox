@@ -1,4 +1,6 @@
-void main() {
+import 'package:http/http.dart' as http;
+
+Future<void> main() async {
   // https://dart.dev/language/collections#maps
   // https://dart.dev/guides/libraries/library-tour#maps
 
@@ -8,7 +10,7 @@ void main() {
 
   // Maps are key-value collections. Maps are unordered (order is not guaranteed like in "set").
   mapOperators();
-  mapMethods();
+  await mapMethods();
 }
 
 void mapOperators() {
@@ -50,7 +52,7 @@ void mapOperators() {
   //writers['Monica'] = 'Dickens'; //Runtime exception: Unsupported operation: Cannot modify unmodifiable map
 }
 
-void mapMethods() {
+Future<void> mapMethods() async {
   final writers = const {
     'David': 'Dabydeen',
     'Charlotte': 'Dacre',
@@ -80,5 +82,75 @@ void mapMethods() {
   print('Is William in writersCopy keys? ${writersCopy.containsKey('William')}');
   print('Is Dacre in writersCopy values? ${writersCopy.containsValue('Dakins')}');
 
-  // TODO: add more exercises
+  // 5.1 Crate map of [Book => Author] pairs with few entries. Add new entry to
+  // the map if map doesn't contain it. Use following approach:
+  // if (!map.containsKey(key)) {
+  //   map[key] = 123;
+  // }
+
+
+  // 5.2 Alternative way is to use "putIfAbsent" method. It is just a different
+  // code style.
+  // map.putIfAbsent(key, 123);
+  // Add another entry to the map using "putIfAbsent" method.
+
+  // 6. Copy and paste MobyDick text code from previous exercise. Count each
+  // word occurrences in the text. Use "update" method.
+  // map.update(word, (count) => count + 1, ifAbsent: () => 1);
+  var mobyDickUrl = Uri.parse('https://www.gutenberg.org/files/2701/old/moby10b.txt');
+  var mobyDickFullText = (await http.get(mobyDickUrl)).body;
+
+  // 7. Iterate over all entries of [book => author] map and print book&author
+  // for short book titles (less than 5 chars).
+  // Use for loop with "map.entries" property.
+  // for (var e in map.entries) {
+  //   print(e);
+  // }
+
+  // 7.1 Do the same as in previous exercise, but use "forEach" method in
+  // functional style.
+
+
+  // 8. Create multimap of [author => list of books]. Fill it with few entries.
+  // Now create a map which contains [author => number of books] pairs. To
+  // create such map use "map" method on multimap (functional style).
+  // var map = multimap.map((key, value) => MapEntry(key, value.length));
+  // NOTE: this method creates new map, it doesn't modify original multimap.
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ----------------------
