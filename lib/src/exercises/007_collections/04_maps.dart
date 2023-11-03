@@ -11,6 +11,7 @@ Future<void> main() async {
   // Maps are key-value collections. Maps are unordered (order is not guaranteed like in "set").
   mapOperators();
   await mapMethods();
+  mapViews();
 }
 
 void mapOperators() {
@@ -174,4 +175,20 @@ Future<void> mapMethods() async {
   };
   var numbersOfBook = booksAuthors.map((author, books) => MapEntry(author, books.length));
   print(numbersOfBook);
+}
+
+void mapViews() {
+  // "keys" and "values" map properties do NOT COPY data, they create a view of the map.
+  // These view objects are not reusable. It's safer to create new "keys" or "values" view each time you need it.
+
+  // 1. Create "keys" view of books map (from previous exercise) and assign it to some variable. Print it.
+  // Now modify original map, and print "keys" view again (refer to that local variable). Observe result.
+
+  // 2. Now let's correct previous exercise, and do it properly - each time you need to print "keys" view, create
+  // new view object. Use "books.keys" expression to create new view.
+
+  // 3. Do the same for "values" view. Create "values" view, print it, modify original map, print "values" view again.
+
+  // 4. Now let's correct previous exercise, and do it properly - each time you need to print "values" view, create
+  // new view object. Use "books.values" expression to create new view.
 }
