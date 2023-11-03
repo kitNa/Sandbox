@@ -135,12 +135,13 @@ Future<void> mapMethods() async {
   // for (var e in map.entries) {
   //   print(e);
   // }
+
   print('\n***mapMethods7***\n');
-  // for(var authors in books.entries) {
-  //   if (books[authors]!.length > 10) {
-  //     print(books.length);
-  //   }
-  // }
+  for(var authors in books.entries) {
+    if (authors.value.length > 30) {
+      print(authors);
+    }
+  }
 
   // 7.1 Do the same as in previous exercise, but use "forEach" method in
   // functional style.
