@@ -138,7 +138,7 @@ Future<void> mapMethods() async {
   // }
 
   print('\n***mapMethods7***\n');
-  for(var authors in books.entries) {
+  for (var authors in books.entries) {
     if (authors.value.length > 30) {
       print(authors);
     }
@@ -165,7 +165,8 @@ Future<void> mapMethods() async {
     "Taylor Jenkins Reid": [
       "The Seven Husbands of Evelyn Hugo",
       "The Atria Summer",
-      "Forever"],
+      "Forever"
+    ],
     "F. Scott Fitzgerald": [
       "The Great Gatsby",
       "This Side of Paradise",
@@ -173,7 +174,8 @@ Future<void> mapMethods() async {
       "The Love of the Last Tycoon "
     ]
   };
-  var numbersOfBook = booksAuthors.map((author, books) => MapEntry(author, books.length));
+  var numbersOfBook =
+      booksAuthors.map((author, books) => MapEntry(author, books.length));
   print(numbersOfBook);
 }
 
@@ -184,11 +186,62 @@ void mapViews() {
   // 1. Create "keys" view of books map (from previous exercise) and assign it to some variable. Print it.
   // Now modify original map, and print "keys" view again (refer to that local variable). Observe result.
 
+  print('\n***mapViews1***\n');
+  var books = {
+    "Matt Haig": "The Midnight Library",
+    "V.E. Schwab": "The Invisible Life of Addie LaRue",
+    "Taylor Jenkins Reid": "The Seven Husbands of Evelyn Hugo",
+    "F. Scott Fitzgerald": "The Great Gatsby",
+  };
+  var booksKeys = books.keys;
+  print('Before modification: $booksKeys\n');
+
+  books['F. Scott Fitzgerald'] =
+      'The Complete Works'; //старий ключ + нове значення => змінюється значення для ключа
+  print(
+      'After modification with the addition of the existing key: $booksKeys\n');
+
+  books['William Shakespeare'] =
+      'The Complete Works'; //новий ключ + нове значення
+  //print('After modification with the addition of new existing key: $booksKeys'); //Runtime exception: Concurrent modification during iteration: _Map len:5.
+
+  //змінна booksKeys зберігає дані, присвоєні в момент ініціалізації і НЕ МОЖЕ бути змінена без ініціалізації
+
   // 2. Now let's correct previous exercise, and do it properly - each time you need to print "keys" view, create
   // new view object. Use "books.keys" expression to create new view.
+  print('\n***mapViews2***\n');
+  print('$books.keys\n');
+
+  books['Emily Bronte'] = 'Wuthering Heights'; //новий ключ + нове значення
+  print('$books.keys\n');
 
   // 3. Do the same for "values" view. Create "values" view, print it, modify original map, print "values" view again.
+  print('\n***mapViews3***\n');
+  var booksValues = books.values;
+  print('Before modification: $booksValues\n');
+
+  books['Some author'] = 'Wuthering Heights'; //новий ключ + існуюче значення
+  print(
+      'After modification with addition of the new key and  existing value: $booksValues\n'); //повторення не дублюються
+
+  books['Some author'] =
+      'The Complete Works'; //існуючий ключ + існуюче значення
+  print(
+      'After modification with addition of the existing key and   existing value: $booksValues\n'); //повторення не дублюються
+  print('All pairs: $books\n');
+
+  books['Anne Bronte'] =
+      'The Tenant of Wildfell Hall'; //новий ключ + нове значення
+  print(
+      'After modification with addition of the new  key and new value: $booksValues\n'); //помилки не виникає, але і значення не змінюється
+  print('All pairs: $books\n');
+  //змінна booksValues зберігає дані, присвоєні в момент ініціалізації і більше не модифікується
 
   // 4. Now let's correct previous exercise, and do it properly - each time you need to print "values" view, create
   // new view object. Use "books.values" expression to create new view.
+  print('\n***mapViews4***\n');
+  print('All values with new ones: ${books.values}\n');
+  books['Donna Tartt'] = 'The Secret History'; //новий ключ + нове значення
+  print(
+      'After modification with addition of the new key and  new value: ${books.values}\n');
 }
