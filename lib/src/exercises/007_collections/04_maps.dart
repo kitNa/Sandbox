@@ -210,10 +210,10 @@ void mapViews() {
   // 2. Now let's correct previous exercise, and do it properly - each time you need to print "keys" view, create
   // new view object. Use "books.keys" expression to create new view.
   print('\n***mapViews2***\n');
-  print('$books.keys\n');
+  print('${books.keys}\n');
 
   books['Emily Bronte'] = 'Wuthering Heights'; //новий ключ + нове значення
-  print('$books.keys\n');
+  print('${books.keys}\n');
 
   // 3. Do the same for "values" view. Create "values" view, print it, modify original map, print "values" view again.
   print('\n***mapViews3***\n');
@@ -222,12 +222,12 @@ void mapViews() {
 
   books['Some author'] = 'Wuthering Heights'; //новий ключ + існуюче значення
   print(
-      'After modification with addition of the new key and  existing value: $booksValues\n'); //повторення не дублюються
+      'After modification with addition of the new key and  existing value: $booksValues\n'); //стан booksValues не оновлюється
 
   books['Some author'] =
       'The Complete Works'; //існуючий ключ + існуюче значення
   print(
-      'After modification with addition of the existing key and   existing value: $booksValues\n'); //повторення не дублюються
+      'After modification with addition of the existing key and   existing value: $booksValues\n'); //стан booksValues не оновлюється
   print('All pairs: $books\n');
 
   books['Anne Bronte'] =
