@@ -17,18 +17,18 @@ void main() {
 }
 
 void namedParams() {
-  //1. Create a function with named parameters that will print a person's last
-  // name and first name. By default, fill in the data with your own name.
+  //1. Create a function with nullable named parameters that will print a person's last
+  // name and first name.
   print('\n***namedParams1***\n');
   void printFullName(
-      {String firstName = 'Katya',
-        String lastName = 'Nahorna'}) {
+      {String? firstName,
+        String? lastName}) {
     print("Ім'я: $firstName\n"
         "Прізвище: $lastName");
   }
-  printFullName(); //Ім'я: Katya, Прізвище: Nahorna
+  printFullName(); //Ім'я: null, Прізвище: null
   printFullName(lastName: 'Radchenko', firstName: 'Lena'); //Ім'я: Lena Прізвище: Radchenko
-  printFullName(lastName: 'Radchenko'); //Ім'я: Katya Прізвище: Radchenko
+  printFullName(lastName: 'Radchenko'); //Ім'я: null Прізвище: Radchenko
 
   //2. Create a function with required  named parameters that will print information about
   // the purchase of any product. Use the following parameters: date, seller, product, price, quantity
