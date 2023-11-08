@@ -108,7 +108,7 @@ void controlFlowOperators() {
   var suggestedDrinks = [
     'water',
     'juice',
-    if (temperature case > 38.5) 'medicine',
+    if (temperature  > 38.5) 'medicine', // 'case' word is optional in this particular case
     if (temperature case > 37.0) 'tea',
     if (temperature case > 36.6) 'milk'
   ];
