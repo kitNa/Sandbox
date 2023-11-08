@@ -4,7 +4,7 @@ typedef Ages = Map<String, int>;
 void main() {
   // https://dart.dev/language/typedefs
 
-  // 1. Define "IntList" typedef to be an alias for "List<int>". Create a list
+  // 1. Define "IntList" B to be an alias for "List<int>". Create a list
   // of numbers from 1 to 5 using "IntList" alias type.
   IntList list = [1, 2, 3, 4, 5];
 
