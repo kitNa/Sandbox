@@ -17,8 +17,6 @@ void main() {
   optionalPositionalParams();
 }
 
-//Імена функцій потрібно писати з великої літери?
-//Чи можна робити перевантаження функцій?
 void namedParams() {
   //1. Create a function with nullable named parameters that will print a person's last
   // name and first name.
@@ -42,20 +40,20 @@ void namedParams() {
   // splitStr(str: "hello world", separator: " "); // trimWhitespace = true
   // splitStr(str: "hello world", trimWhitespace: false); // separator = ","
   print('\n***namedParams1.1***\n');
-  String splitStr({required String str,
+  List<String> splitStr({required String str,
     String separator = ',',
     bool trimWhitespace = true}) {
     return trimWhitespace
-        ? str.split(separator).toString().trim()
-        : str.split(separator).toString();
+        ? str.split(separator).map((part) => part.trim()).toList()
+        : str.split(separator);
   }
-  print(splitStr(
+      print(splitStr(
       str: "the first - Petrov,  the second Ivanov,  the third - Skvortsov"));
   print(splitStr(str: "I love my kid", separator: " "));
   print(splitStr(
       str: "   the first - Petrov, the second Ivanov, the third - Skvortsov  ",
       separator: ", ",
-      trimWhitespace: false));
+      trimWhitespace: true));
 
   //2. Create a function with required  named parameters that will print information about
   // the purchase of any product. Use the following parameters: date, seller, product, price, quantity
@@ -111,15 +109,21 @@ void namedParams() {
   // - positional - void Function<int> the function to call (required),
   // repeat(times: 100, (i) => print(i));   // prints 0, 1, 2, 3, .... 99
   print('\n***namedParams4***\n');
-  void repeat(Function<int>(int i) function, {required int times}) {
-    //for(var i = 0, i < times, i++) {} //List literals require one type argument or none, but 2 found
-    int i = 0;
-    do {
-      function(times);
+  void repeat(void Function(int) function, {required int times}) {
+    for(var i = 0; i < times; i++) {
+      function(i);
     }
-    while (i < times);
   }
-  //repeat((i) => print(i), times: 100);
+  repeat(times: 100, (i) => print(i));
+  repeat(times: 3, (i) {
+    var j = i * 2;
+    print(j);
+  });
+  // bad code style
+  repeat((i) {
+    var j = i * 2;
+    print(j);
+  }, times: 3);
 }
 
 void optionalPositionalParams() {
@@ -136,8 +140,8 @@ void optionalPositionalParams() {
         "Прізвище: $lastName\n"
         "По-батькові: $suffix");
   }
-  printFullName('Катерина',
-      'Нагорна'); //Ім'я: Катерина Прізвище: Нагорна По-батькові: null
+  //Ім'я: Катерина Прізвище: Нагорна По-батькові: null
+  printFullName('Катерина', 'Нагорна');
 
   // 1.1 Try to put optional positional "suffix" parameter on the second position in the function declaration. Observe
   // error/result.
@@ -156,10 +160,9 @@ void optionalPositionalParams() {
   // splitStr("hello world", ",");
   // splitStr("hello world", ",", true);   // not a good idea, as it's not clear what "true" means
   print('\n***optionalPositionalParams2***\n');
-  // String splitStr(String str, [String separator = ' '], [bool trimWhitespace = true]) { //Expected to find ')'
-  //   return trimWhitespace
-  //       ? str.split(separator).toString().trim()
-  //       : str.split(separator).toString();
-  // }
-  //There can be only one optional positional operator
+  List<String> splitStr(String str, [String separator = ' ', bool trimWhitespace = true]) { //Expected to find ')'
+    return trimWhitespace
+        ? str.split(separator).map((part) => part.trim()).toList()
+        : str.split(separator);
+  }
 }

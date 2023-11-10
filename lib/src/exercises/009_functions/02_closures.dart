@@ -13,6 +13,6 @@ void main() {
   deleteInstagram(6);
 }
 
-Function deleteButtonHandler(String app) {
-  return (int i) => print("app $app wos deleted for $i seconds");
+void Function(int) deleteButtonHandler(String app) {
+  return (int i) => print("app $app was deleted for $i seconds");
 }

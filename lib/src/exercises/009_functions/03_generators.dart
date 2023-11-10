@@ -19,11 +19,14 @@ void syncGenerators() {
   print('\n***syncGenerators1***\n');
   Iterable<int> generator(int num) sync* {
     int i = 1;
-    print("generating number $num:");
-    while (i <= num) yield i++;
+    int step = 1;
+    while (i <= num) {
+      print("generating number $i:");
+      yield i++;
+      print('after yield ${step++}');
+    }
   }
-
-  generator(5).forEach((num) {
+  generator(5).take(3).forEach((num) {
     print('$num');
   });
 
@@ -57,16 +60,17 @@ void syncGenerators() {
     'suitcase',
     'pig'
   ];
-  Iterable<String> fannyNamesGenerator() sync* {
-    while (0 == 0) {
-      var prefixIndex = Random().nextInt(10);
-      var suffixIndex = Random().nextInt(10);
-      print('${funnyPrefix[prefixIndex]} ${funnySuffix[suffixIndex]}');
+  Iterable<String> funnyNamesGenerator() sync* {
+    var random = Random();
+    while (true) {
+      var prefixIndex = random.nextInt(10);
+      var suffixIndex = random.nextInt(10);
+      print('Before generating: ${funnyPrefix[prefixIndex]} ${funnySuffix[suffixIndex]}');
       yield '${funnyPrefix[prefixIndex]} ${funnySuffix[suffixIndex]}';
+      print('After generating: ${funnyPrefix[prefixIndex]} ${funnySuffix[suffixIndex]}');
     }
   }
-
-  var fiveFunnyNames = fannyNamesGenerator().take(5);
+  var fiveFunnyNames = funnyNamesGenerator().take(5);
   fiveFunnyNames.forEach((name) {
     print('$name');
   });
@@ -98,7 +102,6 @@ void syncGenerators() {
       yield i;
     }
   }
-
   var generatedList = listGenerator();
   print('\nTake 5:\n');
   generatedList.take(5).forEach((num) => print(num));
