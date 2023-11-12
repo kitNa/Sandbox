@@ -1,7 +1,5 @@
 void main() {
   // https://dart.dev/language/error-handling
 
-  // TODO: create exercises
-
-  //
+  // TODO: add exercises for errors type hierarchies
 }
