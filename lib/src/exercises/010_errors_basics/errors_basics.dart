@@ -298,7 +298,6 @@ void catchExceptions() {
         print("invalid number in file '$file' ($ex)");
         //       rethrow; //Unhandled exception: FormatException: Invalid double. The program was stopped
       } on Exception catch (ex) {
-        //catch all Exceptions
         print("failed to read incomes '$file' ($ex)");
         //       rethrow;
       }
@@ -324,13 +323,13 @@ void catchFinally() {
 // functions from previous exercises. Put "closeDBConnection()" call in "finally" block and observe how it's being
 // always called regardless of whether exception was thrown or not.
   print('\n***catchFinally***\n');
-  List<dynamic> readFilesFromDB(List<String> files) {
-    var sumList = [];
+  List<double> readFilesFromDB(List<String> files) {
+    var sumList = <double>[];
     for (var file in files) {
       try {
         openDBConnection();
         var sum = sumIncomesFromFile(file, 0.23, 30.45);
-        saveIncomesFromDB(sum, sumList);
+        sumList.add(saveIncomeToDB(sum));
       } on FormatException catch (ex) {
         print("invalid number in file '$file' ($ex)");
         rethrow;
@@ -344,14 +343,14 @@ void catchFinally() {
     return sumList;
   }
 
-  var listFiles = ['good', 'good', 'bad', 'bhjl', 'not-found'];
+  var listFiles = ['good', 'good'];
+  //listFiles = ['good', 'good', 'bad', 'bhjl', 'not-found'];
   readFilesFromDB(listFiles);
 }
 
-List<dynamic> saveIncomesFromDB(var incomesSum, List sumList) {
+double saveIncomeToDB(double incomesSum) {
   print('$incomesSum saved to DB');
-  sumList.add(incomesSum);
-  return sumList;
+  return incomesSum;
 }
 
 void closeDBConnection() {
@@ -374,20 +373,16 @@ void asserts() {
 // 1. Just play around with assert statements. Try both variants:
 // - assert(<bool-expression>);
 // - assert(<bool-expression>, <error-message>);
+  print('\n***asserts1***\n');
+  String makeFullName(String firstName, String secondName) {
+    return '$firstName Holovach';
+  }
 
-//   Во время разработки используйте оператор утверждения assert(<condition>, <optionalMessage>);— — чтобы прервать нормальное выполнение, если логическое условие ложно.
-//
-// // Make sure the variable has a non-null value.
-//   assert(text != null);
-//
-// // Make sure the value is less than 100.
-//   assert(number < 100);
-//
-// // Make sure this is an https URL.
-//   assert(urlString.startsWith('https'));
-//   Чтобы прикрепить сообщение к утверждению, добавьте строку в качестве второго аргумента assert (необязательно с завершающей запятой ):
-//
-//   assert(urlString.startsWith('https'),
+  var fullName = makeFullName('Katya', 'Nahorna');
+  //Unhandled exception: Failed assertion: line 384 pos 10: 'fullName == 'Katya Nahorna'': is not true.
+  assert(fullName == 'Katya Nahorna');
+  //Unhandled exception: Failed assertion: line 385 pos 10: 'fullName == 'Katya Nahorna'': The name does not match
+  assert(fullName == 'Katya Nahorna', 'Full name should be a combination of first name and second name');
 }
 
 double parseIncome(String income) {
