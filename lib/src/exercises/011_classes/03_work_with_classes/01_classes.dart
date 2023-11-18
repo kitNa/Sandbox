@@ -8,7 +8,7 @@ void main() {
 
   print('Client size is ${client.calculateSize().toUpperCase()}');
 
-  Skirt skirt = Skirt(client, Silhouette.slim, 50);
+  Skirt skirt = Skirt(client, Silhouette.slim, 30);
   skirt.printSkirt();
 }
 
@@ -54,8 +54,7 @@ class Skirt {
       : _waistWidth = (client.waistCircumference / 2).round().toInt(),
         _hipWidth = (client.hipCircumference / 2).round().toInt(),
         _waistIncrease = _calculateWaistIncrease(silhouette),
-        _hipIncrease = _calculateHipIncrease(silhouette)
-  {
+        _hipIncrease = _calculateHipIncrease(silhouette) {
     if (!Silhouette.values.contains(silhouette)) {
       throw Exception(
           'The entered silhouette value is not in the database. Enter '
@@ -99,16 +98,18 @@ class Skirt {
         (widthDifference / client.waistToHipsDistance).round().toInt();
     var spaces = 0;
     var filling = 0;
-    while (spaces >= 0) {
-      spaces = widthDifference ~/ 2;
-      filling = pictureWaistWidth ~/ 2;
-      for (var i = 0; i < client.waistToHipsDistance; i++) {
+    var incrementLengs = 0;
+    spaces = widthDifference ~/ 2;
+    filling = pictureWaistWidth;
+    for (var i = 0; i < client.waistToHipsDistance; i++) {
+      if (filling <= pictureHipWidth) {
         print(' ' * spaces + '*' * filling);
         spaces -= incrementForWidth;
-        filling += incrementForWidth;
+        filling += incrementForWidth * 2;
+        incrementLengs += 1;
       }
     }
-    for (var i = 0; i < length - client.waistToHipsDistance; i++) {
+    for (var i = 0; i < length - incrementLengs; i++) {
       print('*' * pictureHipWidth);
     }
   }
