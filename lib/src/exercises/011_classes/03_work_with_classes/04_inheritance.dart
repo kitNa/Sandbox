@@ -1,8 +1,7 @@
-import 'package:mongo_dart/mongo_dart.dart';
-import 'package:sandbox/src/exercises/001_basics_variables/variables.dart';
-
 void main() {
   Client client = Client('Katya Nahorna', 32, 42);
+  TypicalFigure figure = TypicalFigure(42);
+  client.size = figure.size;
   print(client);
 }
 
