@@ -44,7 +44,7 @@ class Client {
 
 class Skirt {
   final Client client;
-  final Silhouette silhouette;
+  Silhouette silhouette;
   final int length;
   final int _waistWidth;
   final int _hipWidth;
@@ -73,8 +73,20 @@ class Skirt {
     }
   }
 
-  set waistIncrease(int desirableWaistIncrease) =>
-      waistIncrease = desirableWaistIncrease;
+  set waistIncrease(int desirableWaistIncrease) {
+    switch (desirableWaistIncrease) {
+      case 0:
+        silhouette = Silhouette.slim;
+      case 1:
+        silhouette = Silhouette.regular;
+      case 2:
+        silhouette = Silhouette.loose;
+      default:
+        throw Exception(
+            'The entered waist increase value is not in the database. Enter '
+            'one of the valid values: 0, 1, 2');
+    }
+  }
 
   int get hipIncrease {
     switch (silhouette) {
@@ -85,32 +97,47 @@ class Skirt {
       case Silhouette.loose:
         return 3;
       default:
-        throw Exception('The entered silat value is not in the database. Enter '
+        throw Exception(
+            'The entered silhouette value is not in the database. Enter '
             'one of the valid values: slim, regular, loose');
     }
   }
 
-  set hipIncrease(int desirableHipIncrease) =>
-      waistIncrease = desirableHipIncrease;
+  set hipIncrease(int desirableHipIncrease) {
+    switch (desirableHipIncrease) {
+      case 1:
+        silhouette = Silhouette.slim;
+      case 2:
+        silhouette = Silhouette.regular;
+      case 3:
+        silhouette = Silhouette.loose;
+      default:
+        throw Exception(
+            'The entered hip increase value is not in the database. Enter '
+            'one of the valid values: 0, 1, 2');
+    }
+  }
 
   void printSkirt() {
     var pictureHipWidth = _hipWidth + hipIncrease;
     var pictureWaistWidth = _waistWidth + waistIncrease;
     var widthDifference = pictureHipWidth - pictureWaistWidth;
     var incrementForWidth =
-        (widthDifference / client.waistToHipsDistance).round().toInt();
+    (widthDifference / client.waistToHipsDistance).round().toInt();
     var spaces = 0;
     var filling = 0;
-    while (spaces >= 0) {
-      spaces = widthDifference ~/ 2;
-      filling = pictureWaistWidth ~/ 2;
-      for (var i = 0; i < client.waistToHipsDistance; i++) {
+    var incrementLens = 0;
+    spaces = widthDifference ~/ 2;
+    filling = pictureWaistWidth;
+    for (var i = 0; i < client.waistToHipsDistance; i++) {
+      if (filling <= pictureHipWidth) {
         print(' ' * spaces + '*' * filling);
         spaces -= incrementForWidth;
-        filling += incrementForWidth;
+        filling += incrementForWidth * 2;
+        incrementLens += 1;
       }
     }
-    for (var i = 0; i < length - client.waistToHipsDistance; i++) {
+    for (var i = 0; i < length - incrementLens; i++) {
       print('*' * pictureHipWidth);
     }
   }
