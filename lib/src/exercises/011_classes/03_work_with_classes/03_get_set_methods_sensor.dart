@@ -1,14 +1,18 @@
 import 'dart:math';
 
-void main() {}
+void main() {
+  Sensor sensor = Sensor();
+  print(sensor.celsiusT);
+  print(sensor.celsiusT);
+  print(sensor.kelvinT);
+}
 
 class Sensor {
-  int _sensorResistance;
+  int _sensorResistance = 15;
   DateTime _lastReadTime;
 
   Sensor()
-      : _sensorResistance = _readResistanceFromSensor(),
-        _lastReadTime = DateTime.now();
+      : _lastReadTime = DateTime.now();
 
   double get celsiusT {
     return getCelsiusT();
@@ -24,6 +28,7 @@ class Sensor {
 
   int _readResistanceFromSensor() {
     var newSensorResult = Random().nextInt(100);
+    _lastReadTime = DateTime.now();
     print('reading new value from sensor: $newSensorResult');
     return newSensorResult;
   }

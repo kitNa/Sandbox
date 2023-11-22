@@ -1,9 +1,17 @@
 void main() {
   Poodle poodle = Poodle('green', 'brown', 'dog food');
-  poodle.iamDog();
-  // Так зробити можна, але це погано з точки зору доменної області
-  Mammal mammal = Mammal('', '', '');
+  poodle.printAnimal();
   printVoice(poodle);
+
+  Cat cat = Cat('brown', 'grey', 'fish');
+  cat.printAnimal();
+  printVoice(cat);
+
+  // Так зробити можна, але це погано з точки зору доменної області
+  //Mammal mammal = Mammal('', '', '');
+  Mammal mammal = Mammal('green', 'brown', 'milk');
+  mammal.printAnimal();
+  printVoice(mammal);
 }
 
 void printVoice(Mammal mammal) {
@@ -32,17 +40,24 @@ class Mammal {
   String get getFood {
     return _food;
   }
+
+  void printAnimal() {
+    print('I am a mammal. I have a $getEyeColor eye and $getFurColor furo.'
+        ' I love $getFood.');
+  }
 }
 
 class Cat extends Mammal {
   Cat(String eyeColor, String furColor, String food)
       : super(eyeColor, furColor, food);
 
+  @override
   String voice() {
     return 'miy';
   }
 
-  void iamCat() {
+  @override
+  void printAnimal() {
     print('I am a cat. I have a $getEyeColor eye and $getFurColor furo.'
         ' I love $getFood.');
   }
@@ -58,7 +73,8 @@ class Dog extends Mammal {
     return 'barck';
   }
 
-  void iamDog() {
+  @override
+  void printAnimal() {
     print('I am a dog. I have a $getEyeColor eye and $getFurColor furo. '
         'I love $getFood.');
   }
@@ -70,7 +86,7 @@ class Poodle extends Dog {
   final String _breed = 'poodle';
 
   @override
-  void iamDog() {
+  void printAnimal() {
     print('I am a dog. My breed is $_breed. I have a $getEyeColor eye and '
         '$getFurColor fur. I love $getFood');
   }
