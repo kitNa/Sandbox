@@ -12,27 +12,27 @@ void main() {
   cat.printAnimal();
   printVoice(cat);
 
-  // Так зробити можна, але це погано з точки зору доменної області
-  //Mammal mammal = Mammal('', '', '');
-  Mammal mammal = Mammal('green', 'brown', 'milk');
-  mammal.printAnimal();
-  printVoice(mammal);
+  Cow cow = Cow ('brown', 'black', 'grass');
+  cow.printAnimal(); //викликається конкретний метод абстрактного класу Mammal
+  printVoice(cow);
+
+  // Неможливо створити екземпляр абстрактного класу
+  //Mammal mammal = Mammal('green', 'brown', 'milk');
 }
 
 void printVoice(Mammal mammal) {
   print(mammal.voice());
 }
 
-class Mammal {
+abstract class Mammal {
   final String _eyeColor;
   final String _furColor;
   final String _food;
 
   Mammal(this._eyeColor, this._furColor, this._food);
 
-  String voice() {
-    return 'undefined';
-  }
+  //абстрактний клас, бо він не має тіла
+  String voice();
 
   String get getEyeColor {
     return _eyeColor;
@@ -50,6 +50,24 @@ class Mammal {
     print('I am a mammal. I have a $getEyeColor eye and $getFurColor furo.'
         ' I love $getFood.');
   }
+}
+
+class Cow extends Mammal {
+  Cow (String eyeColor, String furColor, String food)
+      : super (eyeColor, furColor, food);
+
+  //перевизначення абстрактного класу э обов'язковим в класах, які його наслідують
+  @override
+  String voice() {
+    return 'mu';
+  }
+
+  //перевизначення конкретного класу не обов'язкове
+  //@override
+  // void printAnimal() {
+  //   print('I am a cow. I have a $getEyeColor eye and $getFurColor furo.'
+  //       ' I love $getFood.');
+  // }
 }
 
 class Cat extends Mammal {
