@@ -31,7 +31,7 @@ abstract class Mammal {
 
   Mammal(this._eyeColor, this._furColor, this._food);
 
-  //абстрактний клас, бо він не має тіла
+  //абстрактний метод, бо він не має тіла
   String voice();
 
   String get getEyeColor {
@@ -56,13 +56,13 @@ class Cow extends Mammal {
   Cow (String eyeColor, String furColor, String food)
       : super (eyeColor, furColor, food);
 
-  //перевизначення абстрактного класу э обов'язковим в класах, які його наслідують
+  //перевизначення абстрактного методу э обов'язковим в класах, які його наслідують
   @override
   String voice() {
-    return 'mu';
+    return 'moo';
   }
 
-  //перевизначення конкретного класу не обов'язкове
+  //перевизначення конкретного методу не обов'язкове
   //@override
   // void printAnimal() {
   //   print('I am a cow. I have a $getEyeColor eye and $getFurColor furo.'
@@ -76,7 +76,7 @@ class Cat extends Mammal {
 
   @override
   String voice() {
-    return 'miy';
+    return 'meow';
   }
 
   @override
@@ -93,7 +93,7 @@ class Dog extends Mammal {
 
   @override
   String voice() {
-    return 'barck';
+    return 'bark';
   }
 
   @override
