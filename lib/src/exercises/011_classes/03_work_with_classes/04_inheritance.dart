@@ -1,7 +1,6 @@
 void main() {
   Client client = Client('Katya Nahorna', 32, 42);
   TypicalFigure figure = TypicalFigure(42);
-  client.size = figure.size;
   print(client);
 }
 
@@ -9,6 +8,9 @@ class TypicalFigure {
   final int size;
 
   TypicalFigure(this.size);
+  TypicalFigure.print(this.size, String hello) {
+    print(hello);
+  }
 
   int get waistCircumference {
     switch (size) {
@@ -55,10 +57,9 @@ class TypicalFigure {
 
 class Client extends TypicalFigure {
   String fullName;
-  int size;
   int age;
 
-  Client(this.fullName, this.age, this.size) : super(size);
+  Client(this.fullName, this.age, int size) : super.print(size, 'hello');
 
   @override
   String toString(){
