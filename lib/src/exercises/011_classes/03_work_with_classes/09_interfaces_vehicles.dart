@@ -1,5 +1,3 @@
-import 'dart:html';
-
 void main() {
   Boeing737 passengerPlane = Boeing737();
   print(passengerPlane.engine);
@@ -56,9 +54,6 @@ abstract interface class Car
 
 abstract interface class Plane
     implements Vehicle, VehiclesWithEngine, VehiclesWithWings {
-  void releaseLandingGear();
-
-  void hideLandingGear();
 
   void takeOff();
 
@@ -82,8 +77,8 @@ abstract class SteerableVehicle implements Vehicle {
   }
 }
 
-abstract class MotorVehicle extends SteerableVehicle implements VehiclesWithEngine {
-
+abstract class MotorVehicle extends SteerableVehicle
+    implements VehiclesWithEngine {
   @override
   bool isEngineWorking = false;
 
@@ -111,29 +106,20 @@ abstract class MotorVehicle extends SteerableVehicle implements VehiclesWithEngi
   }
 }
 
-abstract class TypicalPlane extends MotorVehicle
-    implements Plane {
-  static const int numberOfWings = 2;
+abstract class TypicalPlane extends MotorVehicle implements Plane {
+  int _numberOfWings = 2;
 
   @override
-  int get wings => numberOfWings;
+  int get wings => _numberOfWings;
+
+  set wings (wings) => _numberOfWings = wings;
 
   @override
   String get steeringWheel => 'Airplane steering wheel';
 
   @override
-  void releaseLandingGear() {
-    print('The landing gear was released');
-  }
-
-  @override
-  void hideLandingGear() {
-    print('The landing gear was hidden');
-  }
-
-  @override
   void changeWings() {
-    print('$numberOfWings were replaced');
+    print('$wings wings were replaced');
   }
 
   @override
@@ -147,15 +133,19 @@ abstract class TypicalPlane extends MotorVehicle
   }
 }
 
-abstract class TypicalBiplane extends TypicalPlane {
-  static const int numberOfWings = 4;
+abstract class PlaneWithLandingGear extends TypicalPlane {
+  void releaseLandingGear() {
+    print('The landing gear was released');
+  }
 
-  @override
-  int get wings => numberOfWings;
+  void hideLandingGear() {
+    print('The landing gear was hidden');
+  }
+}
 
-  @override
-  void changeWings() {
-    print('$numberOfWings were replaced');
+abstract class Biplane extends TypicalPlane {
+  Biplane() {
+    super.wings = 4;
   }
 }
 
@@ -213,12 +203,13 @@ class CarVolkswagen extends TypicalCar {
   @override
   String get engine => 'Electric motor';
 }
-class Boeing737 extends TypicalPlane {
+
+class Boeing737 extends PlaneWithLandingGear {
   @override
   String get engine => 'JT8D (-100, -200), CFMI CFM56-3 (-300, -400, -500)';
 }
 
-class  BiplaneChristenEagle extends TypicalBiplane {
+class BiplaneChristenEagle extends Biplane {
   @override
   String get engine => 'Valach VM210 B2 opposed twin';
 }
