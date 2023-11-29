@@ -15,6 +15,10 @@ void main() {
   }
   print('------------------');
 
+
+
+
+
   // this may be UI handler code
   var id2 = '2';
   var req2 = RegistrationRequest(id2, 'email1@example.com', 'passsword1isudhf');
@@ -30,6 +34,11 @@ void main() {
     print('something went wrong');
   }
   print('------------------');
+
+
+
+
+
 
   var id3 = '3';
   var req3 = RegistrationRequest(id3, 'another@example.com', 'abc');
@@ -47,6 +56,10 @@ void main() {
     print('something went wrong');
   }
   print('------------------');
+
+
+
+
 
   // Imagine that following code is called from subsytem that imports user from CVS file provided by business partners
   // who want to register their employees in your system. We don't care about exact root causes here, we just need
