@@ -255,28 +255,53 @@ class UserManagementException implements Exception {
 
 class RegistrationException extends UserManagementException {
   RegistrationException(super.requestId);
+
+  @override
+  String toString () {
+    return 'Registration was completed with an error';
+  }
 }
 
 class PasswordException extends RegistrationException {
   String password;
 
   PasswordException(super.requestId, this.password);
+
+  @override
+  String toString () {
+    return'Password - $password has some problem';
+  }
 }
 
 class WeakPasswordException extends PasswordException {
   WeakPasswordException(super.requestId, super.password);
+
+  @override
+  String toString () {
+    return'Password - $password is weak';
+  }
 }
 
 class PasswordTooShortException extends PasswordException {
   int minLength;
 
   PasswordTooShortException(super.requestId, super.password, this.minLength);
+
+  @override
+  String toString () {
+    return'Password - $password is too short';
+  }
 }
 
 class PasswordTooLongException extends PasswordException {
   int maxLength;
 
   PasswordTooLongException(super.requestId, super.password, this.maxLength);
+
+  @override
+  String toString () {
+    return'Password - $password is too long';
+  }
 }
 
 class UnsupportedPasswordCharactersException extends PasswordException {
@@ -284,6 +309,11 @@ class UnsupportedPasswordCharactersException extends PasswordException {
 
   UnsupportedPasswordCharactersException(super.requestId, super.password,
       this.unsupportedCharacters);
+
+  @override
+  String toString () {
+    return'Password - $password has unsupported characters';
+  }
 }
 
 class EmailAlreadyInUseException extends RegistrationException {
@@ -301,6 +331,11 @@ class InvalidEmailException extends RegistrationException {
   String email;
 
   InvalidEmailException(super.requestId, this.email);
+
+  @override
+  String toString () {
+    return'Email $email is invalid';
+  }
 }
 
 class LoginException extends UserManagementException {
@@ -309,20 +344,34 @@ class LoginException extends UserManagementException {
 
 class InvalidCredentialsException extends LoginException {
   InvalidCredentialsException(super.requestId);
+
+  @override
+  String toString () {
+    return'Request with ID $requestId has invalid credentials';
+  }
 }
 
 class IncorrectPasswordException extends LoginException {
   String password;
 
   IncorrectPasswordException(super.requestId, this.password);
+
+  @override
+  String toString () {
+    return'Password - $password is incorrect';
+  }
 }
 
 class NoSuchEmailException extends LoginException {
   String email;
 
   NoSuchEmailException(super.requestId, this.email);
-}
 
+  @override
+  String toString () {
+    return'Email $email is not found in DB';
+  }
+}
 
 // imagine this exception comes from DB library, not from our code
 class UniqueConstraintViolationDBException implements Exception {}
