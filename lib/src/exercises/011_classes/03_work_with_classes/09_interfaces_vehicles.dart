@@ -107,12 +107,8 @@ abstract class MotorVehicle extends SteerableVehicle
 }
 
 abstract class TypicalPlane extends MotorVehicle implements Plane {
-  int _numberOfWings = 2;
-
   @override
-  int get wings => _numberOfWings;
-
-  set wings (wings) => _numberOfWings = wings;
+  int get wings;
 
   @override
   String get steeringWheel => 'Airplane steering wheel';
@@ -134,6 +130,12 @@ abstract class TypicalPlane extends MotorVehicle implements Plane {
 }
 
 abstract class PlaneWithLandingGear extends TypicalPlane {
+  static const int _numberOfWings = 2;
+  //const List<String> listString = [];
+
+  @override
+  int get wings => _numberOfWings;
+
   void releaseLandingGear() {
     print('The landing gear was released');
   }
@@ -144,9 +146,10 @@ abstract class PlaneWithLandingGear extends TypicalPlane {
 }
 
 abstract class Biplane extends TypicalPlane {
-  Biplane() {
-    super.wings = 4;
-  }
+  static const int _numberOfWings = 4;
+
+  @override
+  int get wings => _numberOfWings;
 }
 
 abstract class TypicalCar extends MotorVehicle implements Car {
