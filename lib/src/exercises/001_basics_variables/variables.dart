@@ -257,33 +257,32 @@ void constAndFinalVariables() {
 
   //3
   print("***constAndFinalVariables3***");
-  final Cat myCat = Cat();
-  //myCat = new Dog(); - The final variable 'myCat' can only be set once.
+  final Mammal myPet = Cat();
+  //myPet = new Dog(); - The final variable 'myCat' can only be set once.
   print('The final variable can only be set once');
+
+  //4
+  void doSomething() {
+    final List<String> listString = [];
+    listString.add('ghh');
+    print(listString);
+    //не може бути присвоєно новий список
+    //listString = ['a', 'b'];
+  }
 }
 
-// ---------------------------------------------------------------------------------------------------------------------
-//не понимаю, как мне сделать так, что бы в клас можно было вносить свои значения полей
-// class Car {
-//   String engine;
-//   String wheels;
-//   String? back_door;
-//
-//   Car._({
-//     required this.engine,
-//     required this.wheels,
-//     required this.back_door,
-//   });
-//
-//   void printCar(){
-//     if(back_door == null){
-//       print("This car has a ${engine} engine, ${wheels} wheels and does not have a rear door");
-//     }
-//     else{
-//       print("This car has a ${engine} engine, ${wheels} wheels and a rear door");
-//     }
-//   }
-// }
+void staticVariables() {
+//The difference between static data and regular class members is that a regular
+// class member must only be accessed in conjunction with an object of its class.
+// When a class member is declared with the static keyword, it is accessible
+// without a reference to any object.
+
+  Cat.voice(); //виклик нестатичного методу без об'єкта
+  //Cat.voice2(); //статичний член класу не доступний без об'єкта
+  Cat cat = Cat();
+  cat.voice2(); //виклик статичного методу на об'єкті
+
+}
 
 String getBankHistory(String clientId) {
   print('Gathering LOTS of information from the database ....');
@@ -335,6 +334,14 @@ final class Cat extends Mammal {
 
   void purr() {
     print('Cat purrs');
+  }
+
+  static void voice() {
+    print('meows');
+  }
+
+  void voice2() {
+    print('meows2');
   }
 }
 

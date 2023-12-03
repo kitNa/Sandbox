@@ -6,7 +6,7 @@ void main() {
   // this may be REST api handler code
   var id1 = '1';
   var req1 =
-  RegistrationRequest(id1, 'email1@example.com', 'paadsfiasjdfiosas');
+      RegistrationRequest(id1, 'email1@example.com', 'paadsfiasjdfiosas');
   try {
     registerUser(id1, req1);
   } on InvalidEmailException catch (e) {
@@ -71,8 +71,7 @@ void main() {
     print('Email ${e.email} is invalid');
   } on NoSuchEmailException catch (e) {
     print('There is no such email in the database: ${e.email}');
-  }
-  on IncorrectPasswordException catch (e) {
+  } on IncorrectPasswordException catch (e) {
     print('Incorrect password entered: ${e.password}');
   } on LoginException catch (e) {
     print('Please review the entered data');
@@ -85,8 +84,7 @@ void main() {
     print('Email ${e.email} is invalid');
   } on NoSuchEmailException catch (e) {
     print('There is no such email in the database: ${e.email}');
-  }
-  on IncorrectPasswordException catch (e) {
+  } on IncorrectPasswordException catch (e) {
     print('Incorrect password entered: ${e.password}');
   } on LoginException catch (e) {
     print('Please review the entered data');
@@ -94,16 +92,14 @@ void main() {
   print('------------------');
 
   var id5 = '5';
-  var req5 =
-  RegistrationRequest(id5, 'email1@example.com', 'margosha');
+  var req5 = RegistrationRequest(id5, 'email1@example.com', 'margosha');
   try {
     login(req5);
   } on InvalidEmailException catch (e) {
     print('Email ${e.email} is invalid');
   } on NoSuchEmailException catch (e) {
     print('There is no such email in the database: ${e.email}');
-  }
-  on IncorrectPasswordException catch (e) {
+  } on IncorrectPasswordException catch (e) {
     print('Incorrect password entered: ${e.password}');
   } on LoginException catch (e) {
     print('Please review the entered data');
@@ -111,16 +107,14 @@ void main() {
   print('------------------');
 
   var id6 = '6';
-  var req6 =
-  RegistrationRequest(id6, 'emailcom', 'margosha');
+  var req6 = RegistrationRequest(id6, 'emailcom', 'margosha');
   try {
     login(req6);
   } on InvalidEmailException catch (e) {
     print('Email ${e.email} is invalid');
   } on NoSuchEmailException catch (e) {
     print('There is no such email in the database: ${e.email}');
-  }
-  on IncorrectPasswordException catch (e) {
+  } on IncorrectPasswordException catch (e) {
     print('Incorrect password entered: ${e.password}');
   } on LoginException catch (e) {
     print('Please review the entered data');
@@ -130,7 +124,7 @@ void main() {
   var id7 = '7';
   var req7 = RegistrationRequest(id7, 'email1@example.com', 'passsword1isudhf');
   //Unhandled exception: Email email1@example.com is already exist in DB
-  //registerUser(id7, req7);
+  registerUser(id7, req7);
 }
 
 // UserManagement application
@@ -143,12 +137,10 @@ void login(RegistrationRequest req) {
   if (!_isEmailInDB(req.email)) {
     throw NoSuchEmailException(req.requestId, req.email);
   }
-  if (!_isPasswordCorrect(req.password)) {
+  if (!_passwordMatchesToDB(req.password)) {
     throw IncorrectPasswordException(req.requestId, req.password);
   }
-  else {
-    throw LoginException(req.requestId);
-  }
+  print('Login');
 }
 
 void registerUser(String requestId, RegistrationRequest req) {
@@ -215,7 +207,7 @@ bool _passwordHasUnsupportedCharacters(String password) {
   return password.contains(' ');
 }
 
-bool _isPasswordCorrect(String password) {
+bool _passwordMatchesToDB(String password) {
   String artificialPassword = 'margosha';
   return password.toUpperCase() == artificialPassword.toUpperCase();
 }
@@ -257,7 +249,7 @@ class RegistrationException extends UserManagementException {
   RegistrationException(super.requestId);
 
   @override
-  String toString () {
+  String toString() {
     return 'Registration was completed with an error';
   }
 }
@@ -268,8 +260,8 @@ class PasswordException extends RegistrationException {
   PasswordException(super.requestId, this.password);
 
   @override
-  String toString () {
-    return'Password - $password has some problem';
+  String toString() {
+    return 'Password - $password has some problem';
   }
 }
 
@@ -277,8 +269,8 @@ class WeakPasswordException extends PasswordException {
   WeakPasswordException(super.requestId, super.password);
 
   @override
-  String toString () {
-    return'Password - $password is weak';
+  String toString() {
+    return 'Password - $password is weak';
   }
 }
 
@@ -288,8 +280,8 @@ class PasswordTooShortException extends PasswordException {
   PasswordTooShortException(super.requestId, super.password, this.minLength);
 
   @override
-  String toString () {
-    return'Password - $password is too short';
+  String toString() {
+    return 'Password - $password is too short';
   }
 }
 
@@ -299,20 +291,20 @@ class PasswordTooLongException extends PasswordException {
   PasswordTooLongException(super.requestId, super.password, this.maxLength);
 
   @override
-  String toString () {
-    return'Password - $password is too long';
+  String toString() {
+    return 'Password - $password is too long';
   }
 }
 
 class UnsupportedPasswordCharactersException extends PasswordException {
   List<String> unsupportedCharacters;
 
-  UnsupportedPasswordCharactersException(super.requestId, super.password,
-      this.unsupportedCharacters);
+  UnsupportedPasswordCharactersException(
+      super.requestId, super.password, this.unsupportedCharacters);
 
   @override
-  String toString () {
-    return'Password - $password has unsupported characters';
+  String toString() {
+    return 'Password - $password has unsupported characters';
   }
 }
 
@@ -322,8 +314,8 @@ class EmailAlreadyInUseException extends RegistrationException {
   EmailAlreadyInUseException(super.requestId, this.email);
 
   @override
-  String toString () {
-    return'Email $email is already exist in DB';
+  String toString() {
+    return '$runtimeType: Email $email is already exist in DB';
   }
 }
 
@@ -333,8 +325,8 @@ class InvalidEmailException extends RegistrationException {
   InvalidEmailException(super.requestId, this.email);
 
   @override
-  String toString () {
-    return'Email $email is invalid';
+  String toString() {
+    return 'Email $email is invalid';
   }
 }
 
@@ -346,8 +338,8 @@ class InvalidCredentialsException extends LoginException {
   InvalidCredentialsException(super.requestId);
 
   @override
-  String toString () {
-    return'Request with ID $requestId has invalid credentials';
+  String toString() {
+    return 'Request with ID $requestId has invalid credentials';
   }
 }
 
@@ -357,8 +349,8 @@ class IncorrectPasswordException extends LoginException {
   IncorrectPasswordException(super.requestId, this.password);
 
   @override
-  String toString () {
-    return'Password - $password is incorrect';
+  String toString() {
+    return 'Password - $password is incorrect';
   }
 }
 
@@ -368,8 +360,8 @@ class NoSuchEmailException extends LoginException {
   NoSuchEmailException(super.requestId, this.email);
 
   @override
-  String toString () {
-    return'Email $email is not found in DB';
+  String toString() {
+    return 'Email $email is not found in DB';
   }
 }
 
