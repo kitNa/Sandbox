@@ -1,4 +1,4 @@
-//base запрещает имплементацию (подтягивание только сингатур) и разрешает наследование
+//base запрещает имплементацию (подтягивание только сигнатур) и разрешает наследование
 //(подтягивание и сигнатур и реализации). Это гаранитирует, что класс не может быть использован
 //в качестве интерфейса
 //*** Не получится создать класс без модификатора, если наследоваться от base-класса:
@@ -76,7 +76,7 @@ abstract interface class Bicycle implements Vehicle {
 }
 
 //____________________abstract class___________________________________________
-base class SteerableVehicle implements Vehicle {
+abstract base class SteerableVehicle implements Vehicle {
   @override
   void turnLeft() {
     print('You turned left');
@@ -98,7 +98,7 @@ base class SteerableVehicle implements Vehicle {
   String get steeringWheel => throw UnimplementedError();
 }
 
-base class MotorVehicle extends SteerableVehicle implements VehiclesWithEngine {
+abstract base class MotorVehicle extends SteerableVehicle implements VehiclesWithEngine {
   @override
   bool isEngineWorking = false;
 
@@ -130,7 +130,7 @@ base class MotorVehicle extends SteerableVehicle implements VehiclesWithEngine {
   String get engine => throw UnimplementedError();
 }
 
-base class TypicalPlane extends MotorVehicle implements Plane {
+abstract base class TypicalPlane extends MotorVehicle implements Plane {
   @override
   int get wings {
     // TODO: implement wings
@@ -156,7 +156,7 @@ base class TypicalPlane extends MotorVehicle implements Plane {
   }
 }
 
-base class PlaneWithLandingGear extends TypicalPlane {
+abstract base class PlaneWithLandingGear extends TypicalPlane {
   static const int _numberOfWings = 2;
 
   //const List<String> listString = [];
@@ -173,14 +173,14 @@ base class PlaneWithLandingGear extends TypicalPlane {
   }
 }
 
-base class Biplane extends TypicalPlane {
+abstract base class Biplane extends TypicalPlane {
   static const int _numberOfWings = 4;
 
   @override
   int get wings => _numberOfWings;
 }
 
-base class TypicalCar extends MotorVehicle implements Car {
+abstract base class TypicalCar extends MotorVehicle implements Car {
   static const int numberOfWheels = 4;
 
   @override
@@ -217,15 +217,15 @@ base class TypicalCar extends MotorVehicle implements Car {
   }
 }
 
-base class TypicalBicycle extends SteerableVehicle implements Bicycle {
+abstract base class TypicalBicycle extends SteerableVehicle implements Bicycle {
   @override
   void spinThePedals() {
     print('The pedals are spinning');
   }
 }
 
-//Почему не возникает ошибка?
-base class SomeCar implements TypicalCar {
+//Допусьтимо исключительно в текущем файле
+abstract base class SomeCar implements TypicalCar {
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
@@ -252,7 +252,7 @@ final class BiplaneChristenEagle extends Biplane {
   String get engine => 'Valach VM210 B2 opposed twin';
 }
 
-//Снова ожидала ошибки
+//Допусьтимо исключительно в текущем файле
 final class SomeBiplane1 extends BiplaneChristenEagle {}
 final class SomeBiplane2 implements BiplaneChristenEagle {
   @override

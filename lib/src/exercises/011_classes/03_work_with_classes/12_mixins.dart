@@ -4,8 +4,6 @@ inheritance, this helps to avoid the diamond problem of multiple inheritances.
 By using a “mixin” keyword with your “mixin” class, you can easily add the desired functionality
 to the superclass or regular class. You can also integrate interfaces or abstract classes with
 mixins, making them a top choice among developers.
-*** Compile time: Mixins are compiled at runtime, which can make debugging more difficult. Inheritance
-is compiled at compile time, which can make debugging easier.
 *** Code reuse: Mixins can be used to reuse code between unrelated classes, while inheritance can only
 be* used to reuse code between related classes.
 *** Flexibility: Mixins are more flexible than inheritance because they do not require the classes
@@ -13,51 +11,97 @@ be* used to reuse code between related classes.
 
 void main() {
   Poodle poodle = Poodle('green', 'brown', 'dog food');
-  poodle.toBreath();
-  Fish fish = Fish();
-  fish.toBreath();
+  poodle.toBreathe();
+  print('_______________________________');
+  Dolphin dolphin = Dolphin('black', 'gray', 'fish');
+  dolphin.toBreathe();
+  print('_______________________________');
+  Cat cat = Cat('grey', 'gray', 'fish');
+  cat.toBreathe();
 }
 
-mixin class BreathingCreature {
-  void toBreath() {
+abstract interface class Mammal {
+  String get getEyeColor;
+
+  String get getFurColor;
+
+  String get getFood;
+}
+
+abstract interface class Fish {
+  int get numOfFins;
+
+  void toBreathe();
+}
+
+mixin BreathingCreature {
+  void toBreathe() {
     print('This creature develops with the use of oxygen');
   }
 }
 
-class Fish with BreathingCreature {
+mixin BreathingWithLungs {
+  void toBreathe() {
+    print('This creature breathes with lungs');
+  }
 }
 
-abstract class Mammal with BreathingCreature {
+abstract class AbstractFish with BreathingCreature implements Fish {
+  int _numOfFins = 0;
+
+  AbstractFish(int numOfFins) {
+    _numOfFins = numOfFins;
+  }
+
+  @override
+  int get numOfFins => _numOfFins;
+
+  @override
+  void toBreathe() {
+    print('Fish breathes with gills');
+  }
+}
+
+abstract class AbstractMammal with BreathingCreature  implements Mammal {
   final String _eyeColor;
   final String _furColor;
   final String _food;
 
-  Mammal(this._eyeColor, this._furColor, this._food);
+  AbstractMammal(this._eyeColor, this._furColor, this._food);
 
+  @override
   String get getEyeColor {
     return _eyeColor;
   }
 
+  @override
   String get getFurColor {
     return _furColor;
   }
 
+  @override
   String get getFood {
     return _food;
   }
 }
 
-class Cat extends Mammal {
-  Cat(String eyeColor, String furColor, String food)
-      : super(eyeColor, furColor, food);
+//оскільки і класс і міксин мають однойменний метод toBreathe, на екземплярі
+// класу буде викликатися метод класу
+class Dolphin extends AbstractMammal implements Fish {
+  final int _numOfFins = 2;
 
-  void iamCat() {
-    print('I am a cat. I have a $getEyeColor eye and $getFurColor furo.'
-        ' I love $getFood.');
+  Dolphin(super.eyeColor, super.furColor, super.food);
+
+  @override
+  int get numOfFins => _numOfFins;
+
+  @override
+  void toBreathe() {
+    print('Dolphins breathe through a spiracles');
   }
 }
 
-class Dog extends Mammal {
+class Dog extends AbstractMammal {
   Dog(String eyeColor, String furColor, String food)
       : super(eyeColor, furColor, food);
 
@@ -67,6 +111,21 @@ class Dog extends Mammal {
   }
 }
 
+//оскільки клас підтримує два міксини (один від батьківського классу, а інший
+// додано в сигнатурі класу), у яких є метод toBreathe, на екземплярі
+// класу буде викликатися метод останнього у списку міксина BreathingWithLungs
+class Cat extends AbstractMammal with BreathingWithLungs {
+  Cat(String eyeColor, String furColor, String food)
+      : super(eyeColor, furColor, food);
+
+  void iamCat() {
+    print('I am a cat. I have a $getEyeColor eye and $getFurColor furo.'
+        ' I love $getFood.');
+  }
+}
+
+//оскільки клас не має методу toBreathe, на екземплярі
+// класу буде викликатися метод міксина з батьківського класу BreathingCreature
 class Poodle extends Dog {
   Poodle(String eyeColor, String furColor, String food)
       : super(eyeColor, furColor, food);
