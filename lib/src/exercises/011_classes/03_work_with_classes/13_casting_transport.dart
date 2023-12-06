@@ -1,10 +1,48 @@
-void main() {
+import 'dart:ffi';
 
+void main() {
+  Car car = Car('BMW', 1.7);
+  print(car.transportName);
+  car.spareWheel();
+
+  print('___________________________________');
+  //upcast
+  AbstractLandTransportWithWheels abstractCar = car;
+  print('AbstractLandTransportWithWheels name is ${abstractCar.transportName}');
+  //The method 'spareWheel' isn't defined for the type 'AbstractLandTransportWithWheels'.
+  //abstractCar.spareWheel();
+
+  //downcast
+  //A value of type 'AbstractLandTransportWithWheels' can't be assigned to a variable of type 'Car'.
+  //Car newCar = abstractCar;
+
+  CargoPlane plane = CargoPlane(
+      transportName: 'Mriya', carryingCapacity: 174.0, weight: 285.0);
+
+  print('___________________________________');
+  transportOfVehicles(plane, car, 25);
+
+  print('___________________________________');
+  transportOfVehicles(plane, car, 1000);
+
+  print('___________________________________');
+  transportOfVehicles(plane, abstractCar, 25);
+}
+
+void transportOfVehicles(
+    CargoTransport transport, Transport vehicles, int num) {
+  if (vehicles.weight * num < transport.carryingCapacity) {
+    print('This cargo can be transported in the specified way');
+  } else {
+    print('Look for another way of transporting the cargo');
+  }
 }
 
 //_____________________abstract interface______________________________________
 abstract interface class Transport {
-  String get engineType;
+  String get transportName;
+
+  double get weight;
 
   void move();
 
@@ -17,16 +55,19 @@ abstract interface class Transport {
   void refuel();
 }
 
-abstract interface class LandTransport implements Transport {
+abstract interface class CargoTransport implements Transport {
+  double get carryingCapacity;
 }
 
-abstract interface class AirTransport implements Transport {
-  void takeOff();
+abstract interface class LandTransport implements Transport {}
 
+abstract interface class AirTransport implements CargoTransport {
   void landing();
+
+  void takeOff();
 }
 
-abstract interface class WaterTransport implements Transport {
+abstract interface class WaterTransport implements CargoTransport {
   void dropAnchor();
 
   void raiseAnchor();
@@ -52,6 +93,7 @@ mixin HandleControl {
         'The drive handle is lowered, the speed is reduced by 20 km per hour');
   }
 }
+
 
 //____________________abstract class___________________________________________
 abstract class AbstractLandTransportWithWheels implements LandTransport {
@@ -118,7 +160,9 @@ abstract class AbstractAirTransportWithPropeller extends AbstractAirTransport {
   }
 }
 
-abstract class AbstractWaterTransport with HandleControl implements WaterTransport {
+abstract class AbstractWaterTransport
+    with HandleControl
+    implements WaterTransport {
   @override
   void dropAnchor() {
     print('The anchor is lowered');
@@ -137,81 +181,179 @@ abstract class AbstractWaterTransport with HandleControl implements WaterTranspo
 
 //____________________concrete class___________________________________________
 class Car extends AbstractLandTransportWithWheels {
-  final String _engineType;
+  final String _transportName;
+  final double _weight;
 
-  Car(this._engineType);
+  Car(this._transportName, this._weight);
 
   @override
-  String get engineType => _engineType;
+  String get transportName => _transportName;
+
+  @override
+  double get weight => _weight;
+
+  void spareWheel() {
+    print('The spare wheel is secured');
+  }
 }
 
 class Bus extends AbstractLandTransportWithWheels {
   int numberOfSeats;
-  final String _engineType;
+  final String _transportName;
+  final double _weight;
 
-  Bus(this._engineType, this.numberOfSeats);
+  Bus({required transportName, required this.numberOfSeats, required weight})
+      : _transportName = transportName,
+        _weight = weight;
 
   @override
-  String get engineType => _engineType;
+  String get transportName => _transportName;
+
+  @override
+  double get weight => _weight;
 }
 
 class Truck extends AbstractLandTransportWithWheels {
   int bodyVolume;
-  final String _engineType;
+  final String _transportName;
+  final double _weight;
 
-  Truck(this._engineType, this.bodyVolume);
+  Truck({required transportName, required this.bodyVolume, required weight})
+      : _transportName = transportName,
+        _weight = weight;
 
   @override
-  String get engineType => _engineType;
+  String get transportName => _transportName;
+
+  @override
+  double get weight => _weight;
+}
+
+class Train extends AbstractLandTransportOnRails {
+  int numberOfSeats;
+  final String _transportName;
+  final double _weight;
+
+  Train({required transportName, required this.numberOfSeats, required weight})
+      : _transportName = transportName,
+        _weight = weight;
+
+  @override
+  String get transportName => _transportName;
+
+  @override
+  double get weight => _weight;
 }
 
 class PassengerPlane extends AbstractAirTransportWithWings {
   int numberOfSeats;
-  final String _engineType;
+  final String _transportName;
+  final double _weight;
+  final double _carryingCapacity;
 
-  PassengerPlane(this._engineType, this.numberOfSeats);
+  PassengerPlane(
+      {required transportName,
+      required this.numberOfSeats,
+      required carryingCapacity,
+      required weight})
+      : _transportName = transportName,
+        _weight = weight,
+        _carryingCapacity = carryingCapacity;
 
   @override
-  String get engineType => _engineType;
+  String get transportName => _transportName;
+
+  @override
+  double get weight => _weight;
+
+  @override
+  double get carryingCapacity => _carryingCapacity;
 }
 
 class CargoPlane extends AbstractWaterTransport {
-  int carryingCapacity;
-  final String _engineType;
+  final String _transportName;
+  final double _weight;
+  final double _carryingCapacity;
 
-  CargoPlane(this._engineType, this.carryingCapacity);
+  CargoPlane(
+      {required transportName, required carryingCapacity, required weight})
+      : _transportName = transportName,
+        _weight = weight,
+        _carryingCapacity = carryingCapacity;
 
   @override
-  String get engineType => _engineType;
+  String get transportName => _transportName;
+
+  @override
+  double get weight => _weight;
+
+  @override
+  double get carryingCapacity => _carryingCapacity;
 }
 
 class Helicopter extends AbstractAirTransportWithPropeller {
-  int carryingCapacity;
-  final String _engineType;
+  final String _transportName;
+  final double _weight;
+  final double _carryingCapacity;
 
-  Helicopter(this._engineType, this.carryingCapacity);
+  Helicopter(
+      {required transportName, required carryingCapacity, required weight})
+      : _transportName = transportName,
+        _weight = weight,
+        _carryingCapacity = carryingCapacity;
 
   @override
-  String get engineType => _engineType;
+  String get transportName => _transportName;
+
+  @override
+  double get weight => _weight;
+
+  @override
+  double get carryingCapacity => _carryingCapacity;
 }
 
 class PassengerShip extends AbstractWaterTransport {
   int numberOfSeats;
-  final String _engineType;
+  final double _weight;
+  final String _transportName;
+  final double _carryingCapacity;
 
-  PassengerShip(this._engineType, this.numberOfSeats);
+  PassengerShip(
+      {required transportName,
+      required this.numberOfSeats,
+      required carryingCapacity,
+      required weight})
+      : _transportName = transportName,
+        _weight = weight,
+        _carryingCapacity = carryingCapacity;
 
   @override
-  String get engineType => _engineType;
+  String get transportName => _transportName;
+
+  @override
+  double get weight => _weight;
+
+  @override
+  double get carryingCapacity => _carryingCapacity;
 }
 
-
 class CargoShip extends AbstractWaterTransport {
-  int carryingCapacity;
-  final String _engineType;
+  final double _weight;
+  final String _transportName;
+  final double _carryingCapacity;
 
-  CargoShip(this._engineType, this.carryingCapacity);
+  CargoShip(
+      {required transportName, required carryingCapacity, required weight})
+      : _transportName = transportName,
+        _weight = weight,
+        _carryingCapacity = carryingCapacity;
 
   @override
-  String get engineType => _engineType;
+  String get transportName => _transportName;
+
+  @override
+  double get weight => _weight;
+
+  @override
+  double get carryingCapacity => _carryingCapacity;
 }
