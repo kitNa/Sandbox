@@ -11,13 +11,16 @@ be* used to reuse code between related classes.
 
 void main() {
   Poodle poodle = Poodle('green', 'brown', 'dog food');
-  poodle.toBreathe();
+  poodle.breathe();
   print('_______________________________');
   Dolphin dolphin = Dolphin('black', 'gray', 'fish');
-  dolphin.toBreathe();
+  dolphin.breathe();
   print('_______________________________');
   Cat cat = Cat('grey', 'gray', 'fish');
-  cat.toBreathe();
+  cat.breathe();
+  print('_______________________________');
+  Trout trout = Trout(2);
+  trout.breathe();
 }
 
 abstract interface class Mammal {
@@ -31,17 +34,17 @@ abstract interface class Mammal {
 abstract interface class Fish {
   int get numOfFins;
 
-  void toBreathe();
+  void breathe();
 }
 
 mixin BreathingCreature {
-  void toBreathe() {
+  void breathe() {
     print('This creature develops with the use of oxygen');
   }
 }
 
 mixin BreathingWithLungs {
-  void toBreathe() {
+  void breathe() {
     print('This creature breathes with lungs');
   }
 }
@@ -57,7 +60,7 @@ abstract class AbstractFish with BreathingCreature implements Fish {
   int get numOfFins => _numOfFins;
 
   @override
-  void toBreathe() {
+  void breathe() {
     print('Fish breathes with gills');
   }
 }
@@ -85,6 +88,10 @@ abstract class AbstractMammal with BreathingCreature  implements Mammal {
   }
 }
 
+class Trout extends AbstractFish {
+  Trout(super.numOfFins);
+}
+
 //оскільки і класс і міксин мають однойменний метод toBreathe, на екземплярі
 // класу буде викликатися метод класу
 class Dolphin extends AbstractMammal implements Fish {
@@ -96,7 +103,7 @@ class Dolphin extends AbstractMammal implements Fish {
   int get numOfFins => _numOfFins;
 
   @override
-  void toBreathe() {
+  void breathe() {
     print('Dolphins breathe through a spiracles');
   }
 }
