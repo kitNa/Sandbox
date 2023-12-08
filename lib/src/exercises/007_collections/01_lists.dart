@@ -347,8 +347,8 @@ void listInitializersExercises() {
     'mickey mouse',
     'minnie mouse'
   ];
-  characters.forEach((character1) {
-    print(character1);
+  characters.forEach((character) {
+    print(character);
   });
 
   // 2. Copy constructor - constructor that creates a new list from another list. Copies a list in other words.
