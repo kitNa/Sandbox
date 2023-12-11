@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 void main() {
   Garage<AbstractLandTransportWithWheels> garage =
       Garage(garageLength: 6.5, garageWidth: 3.5, garageHeight: 2.5);
@@ -7,6 +5,16 @@ void main() {
   Hangar<Transport> hangar =
       Hangar(hangarLength: 100, hangarWidth: 100, hangarHeight: 30);
   print(hangar);
+
+  Hangar<PassengerPlane> hangarPlane =
+      Hangar(hangarLength: 100, hangarWidth: 100, hangarHeight: 30);
+  print(hangar);
+
+  PlaneHangar planeHangar =
+      PlaneHangar(hangarLength: 100, hangarWidth: 100, hangarHeight: 100);
+
+  ShipDock shipDock =
+      ShipDock(hangarLength: 100, hangarWidth: 100, hangarHeight: 100);
 
   Car carBMW = Car(
       transportName: 'BMW', weight: 1.5, length: 4.9, width: 1.9, height: 1.5);
@@ -34,6 +42,27 @@ void main() {
       length: 84.0,
       width: 88.0,
       height: 18.0);
+
+  //The argument type 'CargoPlane' can't be assigned to the parameter type
+  // 'AbstractLandTransportWithWheels'.
+  //garage.putTransport(plane);
+
+  //The argument type 'Car' can't be assigned to the parameter type
+  // 'PassengerPlane'.
+  //hangarPlane.putTransport(carBMW);
+
+  //The argument type 'CargoPlane' can't be assigned to the parameter type
+  // 'PassengerPlane'.
+  //hangarPlane.putTransport(plane);
+
+  //The argument type 'Car' can't be assigned to the parameter type 'CargoPlane'.
+  //planeHangar.putTransport(carBMW);
+
+  //The argument type 'CargoPlane' can't be assigned to the parameter type
+  // 'CargoShip'.
+  //shipDock.putTransport(plane);
+
+  planeHangar.putTransport(plane);
 
   print('___________________________________');
   garage.putTransport(carBMW);
@@ -68,6 +97,7 @@ void main() {
 
 abstract interface class PlaceToStoreTransport<T extends Transport> {
   void putTransport(T transport);
+
   void removeTransport(T transport);
 }
 
@@ -179,6 +209,20 @@ class Garage<T extends Transport> extends AbstractGarage<T> {
       {required super.garageLength,
       required super.garageWidth,
       required super.garageHeight});
+}
+
+class PlaneHangar extends AbstractHangar<CargoPlane> {
+  PlaneHangar(
+      {required super.hangarLength,
+      required super.hangarWidth,
+      required super.hangarHeight});
+}
+
+class ShipDock extends AbstractHangar<CargoShip> {
+  ShipDock(
+      {required super.hangarLength,
+      required super.hangarWidth,
+      required super.hangarHeight});
 }
 
 void transportOfVehicles(
