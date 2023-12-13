@@ -14,16 +14,16 @@ abstract interface class Figure {
 }
 
 abstract class AbstractFigure implements Figure {
-  int firstSide;
-  int secondSide;
-  int thirdSide;
-  int fourthSide;
+  final int _firstSide;
+  final int _secondSide;
+  final int _thirdSide;
+  final int _fourthSide;
 
-  AbstractFigure(this.firstSide, this.secondSide, this.thirdSide, this.fourthSide);
+  AbstractFigure(this._firstSide, this._secondSide, this._thirdSide, this._fourthSide);
 
   @override
   int perimeter() {
-    return firstSide + secondSide + thirdSide + fourthSide;
+    return _firstSide + _secondSide + _thirdSide + _fourthSide;
   }
 }
 

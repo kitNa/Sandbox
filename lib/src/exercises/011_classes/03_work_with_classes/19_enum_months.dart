@@ -1,6 +1,6 @@
 void main() {
   for (var month in MonthOfYear.values) {
-    print('${month._number} ${month.name} - $month');
+    print('${month.number} ${month.name} - $month');
   }
 }
 
@@ -18,18 +18,18 @@ enum MonthOfYear {
   november (11, 'autumn', true),
   december (12, 'winter', true);
 
-  final int _number;
-  final String _season;
-  final bool _isSchoolMonth;
+  final int number;
+  final String season;
+  final bool isSchoolMonth;
 
-  const MonthOfYear(this._number, this._season, this._isSchoolMonth);
+  const MonthOfYear(this.number, this.season, this.isSchoolMonth);
 
   @override
   String toString() {
-    if (_isSchoolMonth) {
-      return '$_season, is time to go to school';
+    if (isSchoolMonth) {
+      return '$season, is time to go to school';
     } else {
-      return '$_season, is vacation time';
+      return '$season, is vacation time';
     }
   }
 }
