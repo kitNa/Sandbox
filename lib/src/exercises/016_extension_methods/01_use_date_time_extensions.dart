@@ -1,5 +1,4 @@
-import 'package:intl/intl.dart';
-import 'package:sandbox/src/exercises/16_extension_methods/01_string_time_extension.dart';
+import '01_string_time_extension.dart';
 import '01_date_time_extension.dart';
 
 void main() {

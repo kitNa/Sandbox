@@ -1,4 +1,4 @@
-import '14_generics.dart';
+import '../../014_generics/01_generics.dart';
 
 void main() {
   // transportName: transportName,
