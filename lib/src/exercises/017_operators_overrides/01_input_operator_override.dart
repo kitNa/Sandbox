@@ -156,16 +156,6 @@ abstract class AbstractHangar<T extends Transport>
       return 'This hangar is free';
     }
   }
-  //
-  // @override
-  // void operator >>(T transport) {
-  //   removeTransport(transport);
-  // }
-  //
-  // @override
-  // void operator <<(T transport) {
-  //   putTransport(transport);
-  // }
 }
 
 class Hangar<T extends Transport> extends AbstractHangar<T> {

@@ -2,12 +2,12 @@ import '02_string_case_extension.dart';
 import '02_string_operators_extension.dart';
 
 void main() {
-  var name = 'katya';
+  var name = 'Katya';
   print(name.capitalize());
 
   print('------------------');
-  print('katya - Tty = ${name - 'Kty'}');
+  print('katya - a = ${name - 'a'}');
   print('katya - ty = ${name - 'ty'}');
-  print('katya - T = ${name - 'T'}');
+  print('Katya - T = ${name - 'T'}');
   print('katya - KATY = ${name - 'KATY'}');
 }
