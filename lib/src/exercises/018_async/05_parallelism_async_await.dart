@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-void main() {
+void main() async {
   print("staring main ....");
   var x = 10;
   var y = 20;
@@ -24,24 +24,24 @@ void main() {
 
   var totalLens = 0;
 
+
   var httpResp1 = makeHttpGetRequest(url1).then((httpResp1) {
-    print("url1 response 1: ${httpResp1.statusCode}");
-    var book1Len = httpResp1.body.length;
-    totalLens += book1Len;
-    print("after request 1");
-    print("reading Romeo and Juliet: \n${snippet(httpResp1.body)}");
+    print("url2 response 2: ${httpResp1.statusCode}");
+    var book2Len = httpResp1.body.length;
+    totalLens += book2Len;
+    print("after request 2");
+    print("reading Moby Dick: \n${snippet(httpResp1.body)}");
     print("");
-    return httpResp1;
   });
 
-  var httpResp2 = makeHttpGetRequest(url2).then((httpResp2) {
+  var httpResp2 =  makeHttpGetRequest(url2).then((httpResp2) {
     print("url2 response 2: ${httpResp2.statusCode}");
     var book2Len = httpResp2.body.length;
     totalLens += book2Len;
     print("after request 2");
     print("reading Moby Dick: \n${snippet(httpResp2.body)}");
     print("");
-  });
+  });;
 
   var httpResp3 = makeHttpGetRequest(url3).then((httpResp3) {
     print("url3 response3: ${httpResp3.statusCode}");
@@ -96,7 +96,9 @@ void main() {
     httpResp5,
     httpResp6,
     httpResp7
-  ]).then((httpResp) => print('Total lens: $totalLens'));
+  ]).then((httpResp) {
+    print('total lens: $totalLens');
+  });
 
   var a = 10;
   var b = 20;
@@ -107,7 +109,7 @@ void main() {
 }
 
 // -------------------- somewhere in the library -------------------------------
-Future<http.Response> makeHttpGetRequest(String url) {
+Future<http.Response> makeHttpGetRequest(String url) async {
   return http.get(Uri.parse(url));
 }
 

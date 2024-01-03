@@ -103,7 +103,7 @@ void main() async {
 }
 
 // -------------------- somewhere in the library -------------------------------
-Future<http.Response> makeHttpGetRequest(String url, Duration delay) {
+Future<http.Response> makeHttpGetRequest(String url, Duration delay) async {
   return http.get(Uri.parse(url));
 }
 
