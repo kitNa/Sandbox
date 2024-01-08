@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-void main() async {
+void main() {
   print("staring main ....");
   var x = 10;
   var y = 20;
@@ -109,7 +109,7 @@ void main() async {
 }
 
 // -------------------- somewhere in the library -------------------------------
-Future<http.Response> makeHttpGetRequest(String url) async {
+Future<http.Response> makeHttpGetRequest(String url) {
   return http.get(Uri.parse(url));
 }
 
