@@ -1,4 +1,4 @@
-import 'package:sandbox/src/exercises/011_classes/03_work_with_classes/14_work_with_constractors.dart';
+import '17_work_with_constractors.dart';
 
 void main() {
   Triangle triangle = Triangle(10, 20, 30);
