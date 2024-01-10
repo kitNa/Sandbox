@@ -20,7 +20,6 @@ void main() {
 
 //Component
 abstract interface class ParcelComponent {
-
   int get height;
 
   int get width;
@@ -132,6 +131,7 @@ class BoxWithFiller extends ParcelElement {
 
 class Product extends ParcelElement {
   double productWeight;
+
   Product(this.productWeight, super.height, super.width, super.depth);
 
   @override
