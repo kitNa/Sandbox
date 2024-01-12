@@ -5,8 +5,6 @@
 // другой только с филлером, третий например для мелких объектов создаёт коробки
 // без филлера, а для больших с филлером
 
-import 'package:mongo_dart/mongo_dart.dart';
-
 void main() {
   Product book = Product(250, 10, 7, 1);
   CleverPacker parcel = CleverPacker(book);
@@ -17,14 +15,23 @@ void main() {
         " height ${element.height} and depth  ${element.depth}");
   }
   print("----------------------------");
-  Product tv = Product(4250, 40, 70, 10);
-  CleverPacker parcel1 = CleverPacker(tv);
+  PackerWithFiller parcel1 = PackerWithFiller(book);
   print("Parcel weight is ${parcel1.calculateWeight()} gram");
   print("Parcel elements:");
   for (var element in parcel1.subComponents) {
     print("- ${element.runtimeType} with width ${element.width},"
         " height ${element.height} and depth  ${element.depth}");
   }
+  print("----------------------------");
+  Product tv = Product(4250, 40, 70, 10);
+  CleverPacker parcel2 = CleverPacker(tv);
+  print("Parcel weight is ${parcel2.calculateWeight()} gram");
+  print("Parcel elements:");
+  for (var element in parcel2.subComponents) {
+    print("- ${element.runtimeType} with width ${element.width},"
+        " height ${element.height} and depth  ${element.depth}");
+  }
+
 }
 
 //product interface
@@ -78,14 +85,11 @@ abstract class Parcel implements ParcelInterface {
 }
 
 //abstract creator
-abstract class Packer implements ParcelInterface {
-  @override
+abstract class Packer {
   int depth;
 
-  @override
   int height;
 
-  @override
   int width;
 
   Product product;
@@ -102,7 +106,6 @@ abstract class Packer implements ParcelInterface {
   //factory method
   void packUp();
 
-  @override
   double calculateWeight() {
     var parcelWeight = 0.0;
     for (ParcelInterface subComponent in subComponents) {

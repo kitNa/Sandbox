@@ -7,14 +7,14 @@
 
 void main(List<String> args) {
   var codecName = args[0];
-  late Codec codec;
+  late PersonPersistence codec;
   switch (codecName) {
     case ("json"):
-      codec = Codec(JsonCodec());
+      codec = PersonPersistence(JsonCodec());
     case ("bin"):
-      codec = Codec(BinaryCodec());
+      codec = PersonPersistence(BinaryCodec());
     case ("txt"):
-      codec = Codec(TextCodec());
+      codec = PersonPersistence(TextCodec());
   }
   Person person =
       Person(name: 'Katya', surname: 'Nahorna', phoneNumber: 1111111);
@@ -23,7 +23,7 @@ void main(List<String> args) {
 }
 
 //Strategy interface
-abstract interface class StrategyInterface {
+abstract interface class Codec {
   void encode(Person person);
 
   void decode(Person person);
@@ -45,24 +45,40 @@ class Person {
 }
 
 //strategy context
-class Codec implements StrategyInterface {
-  StrategyInterface concreteStrategy;
+class PersonPersistence {
+  Codec concreteStrategy;
 
-  Codec(this.concreteStrategy);
+  IOChannel channel;
 
-  @override
+  PersonPersistence(this.concreteStrategy) : channel = IOChannel('channel.txt');
+
   void encode(Person person) {
+    channel.saveToFile(person);
     concreteStrategy.encode(person);
   }
 
-  @override
   void decode(Person person) {
+    channel.removeFromFile(person);
     concreteStrategy.decode(person);
   }
 }
 
+class IOChannel {
+  String channelName;
+
+  IOChannel(this.channelName);
+
+  void saveToFile (Person person) {
+    print("The person ($person) was save to $channelName");
+  }
+
+  void removeFromFile (Person person) {
+    print("The person ($person) was remove from $channelName");
+  }
+}
+
 //concrete strategy 1
-class JsonCodec implements StrategyInterface {
+class JsonCodec implements Codec {
   @override
   void decode(Person person) {
     print('Json decode work with: $person');
@@ -75,7 +91,7 @@ class JsonCodec implements StrategyInterface {
 }
 
 //concrete strategy 2
-class BinaryCodec implements StrategyInterface {
+class BinaryCodec implements Codec {
   @override
   void decode(Person person) {
     print('Binary decode work with: $person');
@@ -88,7 +104,7 @@ class BinaryCodec implements StrategyInterface {
 }
 
 //concrete strategy 3
-class TextCodec implements StrategyInterface {
+class TextCodec implements Codec {
   @override
   void decode(Person person) {
     print('Text decode work with: $person');
