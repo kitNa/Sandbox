@@ -7,31 +7,30 @@
 
 void main() {
   Product book = Product(250, 10, 7, 1);
-  CleverPacker parcel = CleverPacker(book);
-  print("Parcel weight is ${parcel.calculateWeight()} gram");
-  print("Parcel elements:");
-  for (var element in parcel.subComponents) {
-    print("- ${element.runtimeType} with width ${element.width},"
-        " height ${element.height} and depth  ${element.depth}");
+  CleverPacker packer = CleverPacker();
+  Parcel parcel = packer.pack(book);
+  print('Parcel elements:');
+  for(var element in  parcel.subComponents) {
+    print('- ${element.runtimeType} with weight ${element.calculateWeight()}');
   }
+  print('Parcel weight is ${parcel.calculateParcelWeight()}');
   print("----------------------------");
-  PackerWithFiller parcel1 = PackerWithFiller(book);
-  print("Parcel weight is ${parcel1.calculateWeight()} gram");
-  print("Parcel elements:");
-  for (var element in parcel1.subComponents) {
-    print("- ${element.runtimeType} with width ${element.width},"
-        " height ${element.height} and depth  ${element.depth}");
+  PackerWithFiller packer1 = PackerWithFiller();
+  Parcel parcel1 = packer1.pack(book);
+  print('Parcel elements:');
+  for(var element in  parcel1.subComponents) {
+    print('- ${element.runtimeType} with weight ${element.calculateWeight()}');
   }
+  print('Parcel weight is ${parcel1.calculateParcelWeight()}');
   print("----------------------------");
   Product tv = Product(4250, 40, 70, 10);
-  CleverPacker parcel2 = CleverPacker(tv);
-  print("Parcel weight is ${parcel2.calculateWeight()} gram");
-  print("Parcel elements:");
-  for (var element in parcel2.subComponents) {
-    print("- ${element.runtimeType} with width ${element.width},"
-        " height ${element.height} and depth  ${element.depth}");
+  CleverPacker packer2 = CleverPacker();
+  Parcel parcel2 = packer2.pack(tv);
+  print('Parcel elements:');
+  for(var element in  parcel2.subComponents) {
+    print('- ${element.runtimeType} with weight ${element.calculateWeight()}');
   }
-
+  print('Parcel weight is ${parcel2.calculateParcelWeight()}');
 }
 
 //product interface
@@ -47,7 +46,7 @@ abstract interface class ParcelInterface {
 
 //abstract product parcel
 abstract class Parcel implements ParcelInterface {
-  static const double cardboardDensity = 0.42;
+  double cardboardDensity = 0.42;
 
   @override
   int depth;
@@ -78,87 +77,69 @@ abstract class Parcel implements ParcelInterface {
     return 2 * (height * width + height * depth + depth * width);
   }
 
+
   @override
   double calculateWeight() {
     return boxArea * cardboardDensity;
   }
-}
 
-//abstract creator
-abstract class Packer {
-  int depth;
-
-  int height;
-
-  int width;
-
-  Product product;
-
-  Packer(this.product)
-      : depth = product.depth + 2,
-        height = product.height + 2,
-        width = product.width + 2 {
-    packUp();
-  }
-
-  List<ParcelInterface> subComponents = <ParcelInterface>[];
-
-  //factory method
-  void packUp();
-
-  double calculateWeight() {
+  double calculateParcelWeight() {
     var parcelWeight = 0.0;
-    for (ParcelInterface subComponent in subComponents) {
+    for (var subComponent in subComponents) {
       parcelWeight += subComponent.calculateWeight();
     }
     return parcelWeight;
   }
 }
 
+//abstract creator
+abstract class Packer {
+  Parcel createParcel(ParcelInterface product);
+
+  Parcel pack(ParcelInterface product) {
+    Parcel parcel = createParcel(product);
+    parcel.subComponents.add(product);
+    parcel.subComponents.add(parcel);
+    return parcel;
+  }
+}
+
 //concrete creator
 class PackerWithFiller extends Packer {
-  PackerWithFiller(super.product);
-
   //factory method
   @override
-  void packUp() {
-    super.subComponents = [];
-    ParcelWithFiller parcelWithFiller = ParcelWithFiller(depth, height, width);
-    super.subComponents.add(product);
-    super.subComponents.add(parcelWithFiller);
+  Parcel createParcel(ParcelInterface product) {
+    ParcelWithFiller parcelWithFiller = ParcelWithFiller(
+        product.depth + 2, product.height + 2, product.width + 2);
+    return parcelWithFiller;
   }
 }
 
 //concrete creator
 class SimplePacker extends Packer {
-  SimplePacker(super.product);
-
   //factory method
   @override
-  void packUp() {
-    super.subComponents = [];
-    SimpleParcel parcelWithFiller = SimpleParcel(depth, height, width);
-    super.subComponents.add(product);
-    super.subComponents.add(parcelWithFiller);
+  Parcel createParcel(ParcelInterface product) {
+    SimpleParcel simpleParcel =
+        SimpleParcel(product.depth + 2, product.height + 2, product.width + 2);
+    return simpleParcel;
   }
 }
 
 //concrete creator
 class CleverPacker extends Packer {
-  CleverPacker(super.product);
-
   //factory method
   @override
-  void packUp() {
-    super.subComponents = [];
-    ParcelInterface packaging;
+  Parcel createParcel(ParcelInterface product) {
+    Parcel packaging;
     if (product.depth > 50 || product.height > 50 || product.width > 50) {
-      packaging = ParcelWithFiller(depth, height, width);
+      packaging = ParcelWithFiller(
+          product.depth + 2, product.height + 2, product.width + 2);
     } else {
-      packaging = SimpleParcel(depth, height, width);
+      packaging = SimpleParcel(
+          product.depth + 2, product.height + 2, product.width + 2);
     }
-    super.subComponents.add(product);
-    super.subComponents.add(packaging);
+    return packaging;
   }
 }
 
