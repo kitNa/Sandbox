@@ -75,13 +75,6 @@ abstract class Parcel implements ParcelInterface {
 
   Parcel(this.depth, this.height, this.width);
 
-  // Parcel.withComponent(ParcelInterface component)
-  //     : depth = component.depth + 2,
-  //       height = component.height + 2,
-  //       width = component.width + 2 {
-  //   subComponents.add(component);
-  // }
-
   List<ParcelInterface> subComponents = <ParcelInterface>[];
 
   addItem(ParcelInterface subComponent) {
@@ -140,7 +133,7 @@ class PackerWithFiller extends Packer {
   //factory method
   @override
   Parcel createParcel(ParcelInterface component) {
-    return ParcelWithFiller.withComponent(component);
+    return ParcelWithFiller.forComponent(component);
   }
 }
 
@@ -149,7 +142,7 @@ class SimplePacker extends Packer {
   //factory method
   @override
   Parcel createParcel(ParcelInterface component) {
-    return SimpleParcel.withComponent(component);
+    return SimpleParcel.forComponent(component);
   }
 }
 
@@ -159,9 +152,9 @@ class CleverPacker extends Packer {
   @override
   Parcel createParcel(ParcelInterface component) {
     if (component.depth > 50 || component.height > 50 || component.width > 50) {
-      return ParcelWithFiller.withComponent(component);
+      return ParcelWithFiller.forComponent(component);
     } else {
-      return SimpleParcel.withComponent(component);
+      return SimpleParcel.forComponent(component);
     }
   }
 }
@@ -170,7 +163,7 @@ class CleverPacker extends Packer {
 class SimpleParcel extends Parcel {
   SimpleParcel(super.depth, super.height, super.width);
 
-  SimpleParcel.withComponent(ParcelInterface component)
+  SimpleParcel.forComponent(ParcelInterface component)
       : super(component.depth + 2, component.height + 2, component.width + 2);
 }
 
@@ -178,7 +171,7 @@ class SimpleParcel extends Parcel {
 class ParcelWithFiller extends Parcel {
   ParcelWithFiller.empty(super.depth, super.height, super.width);
 
-  ParcelWithFiller.withComponent(ParcelInterface component)
+  ParcelWithFiller.forComponent(ParcelInterface component)
       : super(component.depth + 2, component.height + 2, component.width + 2);
 
   static const double fillerWeightPerUnitVolume = 0.001;

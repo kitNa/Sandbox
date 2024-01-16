@@ -6,15 +6,16 @@
 // (коробка в коробке в коробке ...). И также несколько
 // посылок могут комбинироваться в одну коробку (3 коробки в коробке).
 
+import 'package:sandbox/src/exercises/019_patterns/03_factory_method.dart';
+
 void main() {
-  ParcelComponent book = Product(250, 10, 7, 1);
-  ParcelComponent boxForBook = SimpleParcel(12, 15, 10);
-  ParcelComposite innerBox = ParcelWithFiller(25, 18, 20);
-  innerBox.addItem(book);
+  var book = Product(1, 7, 10, 250.0);
+  var boxForBook = SimpleParcel(12, 15, 10);
+  boxForBook.addItem(book);
+  var innerBox = ParcelWithFiller(25, 18, 20);
   innerBox.addItem(boxForBook);
-  ParcelComponent outerBox = SimpleParcel(30, 20, 25);
   ParcelComposite parcel = SimpleParcel(35, 25, 30);
-  parcel.addItem(outerBox);
+  parcel.addItem(innerBox);
   print('Parcel weight: ${parcel.totalWeight} gm');
 }
 
@@ -79,24 +80,6 @@ abstract class ParcelComposite implements ParcelComponent {
   }
 }
 
-//Leaf
-abstract class ParcelElement implements ParcelComponent {
-
-  @override
-  final int height;
-
-  @override
-  final int width;
-
-  @override
-  final int depth;
-
-  @override
-  final double weight;
-
-  ParcelElement(this.height, this.width, this.depth, this.weight);
-}
-
 class SimpleParcel extends ParcelComposite {
   SimpleParcel(super.depth, super.height, super.width);
 }
@@ -116,8 +99,21 @@ class ParcelWithFiller extends ParcelComposite {
   }
 }
 
-class Product extends ParcelElement {
-  Product(super.height, super.width, super.depth, super.weight);
+//Leaf
+class Product implements ParcelComponent{
+  @override
+  int depth;
+
+  @override
+  int height;
+
+  @override
+  int width;
+
+  @override
+  double weight;
+
+  Product(this.height, this.width, this.depth, this.weight);
 
   @override
   double get totalWeight => weight;
