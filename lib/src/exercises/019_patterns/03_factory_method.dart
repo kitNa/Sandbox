@@ -5,32 +5,37 @@
 // другой только с филлером, третий например для мелких объектов создаёт коробки
 // без филлера, а для больших с филлером
 
+import 'package:sandbox/src/exercises/019_patterns/01_composite.dart';
+
 void main() {
-  Product book = Product(250, 10, 7, 1);
+  Product book = Product(1, 7, 10, 350);
   CleverPacker packer = CleverPacker();
   Parcel parcel = packer.pack(book);
   print('Parcel elements:');
-  for(var element in  parcel.subComponents) {
-    print('- ${element.runtimeType} with weight ${element.calculateWeight()}');
+  for (var element in parcel.subComponents) {
+    print('- ${element.runtimeType} with weight ${element.weight}');
   }
-  print('Parcel weight is ${parcel.calculateParcelWeight()}');
+  print('- ${parcel.runtimeType} with weight ${parcel.weight}');
+  print('Parcel weight is ${parcel.totalWeight}');
   print("----------------------------");
   PackerWithFiller packer1 = PackerWithFiller();
   Parcel parcel1 = packer1.pack(book);
   print('Parcel elements:');
-  for(var element in  parcel1.subComponents) {
-    print('- ${element.runtimeType} with weight ${element.calculateWeight()}');
+  for (var element in parcel1.subComponents) {
+    print('- ${element.runtimeType} with weight ${element.weight}');
   }
-  print('Parcel weight is ${parcel1.calculateParcelWeight()}');
+  print('- ${parcel1.runtimeType} with weight ${parcel1.weight}');
+  print('Parcel weight is ${parcel1.totalWeight}');
   print("----------------------------");
-  Product tv = Product(4250, 40, 70, 10);
+  Product tv = Product(10, 70, 40, 6230);
   CleverPacker packer2 = CleverPacker();
   Parcel parcel2 = packer2.pack(tv);
   print('Parcel elements:');
-  for(var element in  parcel2.subComponents) {
-    print('- ${element.runtimeType} with weight ${element.calculateWeight()}');
+  for (var element in parcel2.subComponents) {
+    print('- ${element.runtimeType} with weight ${element.weight}');
   }
-  print('Parcel weight is ${parcel2.calculateParcelWeight()}');
+  print('- ${parcel2.runtimeType} with weight ${parcel2.weight}');
+  print('Parcel weight is ${parcel2.totalWeight}');
 }
 
 //product interface
@@ -41,12 +46,14 @@ abstract interface class ParcelInterface {
 
   int get depth;
 
-  double calculateWeight();
+  double get weight;
+
+  double get totalWeight;
 }
 
-//abstract product parcel
+//abstract  parcel
 abstract class Parcel implements ParcelInterface {
-  double cardboardDensity = 0.42;
+  double cardboardDensity = 0.042;
 
   @override
   int depth;
@@ -57,7 +64,23 @@ abstract class Parcel implements ParcelInterface {
   @override
   int width;
 
+  int get boxArea {
+    return 2 * (height * width + height * depth + depth * width);
+  }
+
+  @override
+  double get weight {
+    return boxArea * cardboardDensity;
+  }
+
   Parcel(this.depth, this.height, this.width);
+
+  // Parcel.withComponent(ParcelInterface component)
+  //     : depth = component.depth + 2,
+  //       height = component.height + 2,
+  //       width = component.width + 2 {
+  //   subComponents.add(component);
+  // }
 
   List<ParcelInterface> subComponents = <ParcelInterface>[];
 
@@ -73,101 +96,17 @@ abstract class Parcel implements ParcelInterface {
     }
   }
 
-  int get boxArea {
-    return 2 * (height * width + height * depth + depth * width);
-  }
-
-
   @override
-  double calculateWeight() {
-    return boxArea * cardboardDensity;
-  }
-
-  double calculateParcelWeight() {
-    var parcelWeight = 0.0;
+  get totalWeight {
+    var parcelWeight = weight;
     for (var subComponent in subComponents) {
-      parcelWeight += subComponent.calculateWeight();
+      parcelWeight += subComponent.weight;
     }
     return parcelWeight;
   }
 }
 
-//abstract creator
-abstract class Packer {
-  Parcel createParcel(ParcelInterface product);
-
-  Parcel pack(ParcelInterface product) {
-    Parcel parcel = createParcel(product);
-    parcel.subComponents.add(product);
-    parcel.subComponents.add(parcel);
-    return parcel;
-  }
-}
-
-//concrete creator
-class PackerWithFiller extends Packer {
-  //factory method
-  @override
-  Parcel createParcel(ParcelInterface product) {
-    ParcelWithFiller parcelWithFiller = ParcelWithFiller(
-        product.depth + 2, product.height + 2, product.width + 2);
-    return parcelWithFiller;
-  }
-}
-
-//concrete creator
-class SimplePacker extends Packer {
-  //factory method
-  @override
-  Parcel createParcel(ParcelInterface product) {
-    SimpleParcel simpleParcel =
-        SimpleParcel(product.depth + 2, product.height + 2, product.width + 2);
-    return simpleParcel;
-  }
-}
-
-//concrete creator
-class CleverPacker extends Packer {
-  //factory method
-  @override
-  Parcel createParcel(ParcelInterface product) {
-    Parcel packaging;
-    if (product.depth > 50 || product.height > 50 || product.width > 50) {
-      packaging = ParcelWithFiller(
-          product.depth + 2, product.height + 2, product.width + 2);
-    } else {
-      packaging = SimpleParcel(
-          product.depth + 2, product.height + 2, product.width + 2);
-    }
-    return packaging;
-  }
-}
-
-//concrete product parcel
-class SimpleParcel extends Parcel {
-  SimpleParcel(super.depth, super.height, super.width);
-}
-
-//concrete product parcel
-class ParcelWithFiller extends Parcel {
-  ParcelWithFiller(super.depth, super.height, super.width);
-
-  static const double fillerWeightPerUnitVolume = 0.001;
-
-  double get fillerWeight {
-    return height * width * depth * fillerWeightPerUnitVolume;
-  }
-
-  @override
-  double calculateWeight() {
-    return super.calculateWeight() + fillerWeight;
-  }
-}
-
-class Product implements ParcelInterface {
-  double productWeight;
-
-  static const double cardboardDensity = 0.42;
+abstract class ParcelElement implements ParcelInterface{
 
   @override
   final int height;
@@ -178,10 +117,85 @@ class Product implements ParcelInterface {
   @override
   final int depth;
 
-  Product(this.productWeight, this.height, this.width, this.depth);
+  @override
+  final double weight;
+
+  ParcelElement(this.height, this.width, this.depth, this.weight);
+}
+
+
+//abstract creator
+abstract class Packer {
+  Parcel createParcel(ParcelInterface product);
+
+  Parcel pack(ParcelInterface component) {
+    Parcel parcel = createParcel(component);
+    parcel.subComponents.add(component);
+    return parcel;
+  }
+}
+
+//concrete creator
+class PackerWithFiller extends Packer {
+  //factory method
+  @override
+  Parcel createParcel(ParcelInterface component) {
+    return ParcelWithFiller.withComponent(component);
+  }
+}
+
+//concrete creator
+class SimplePacker extends Packer {
+  //factory method
+  @override
+  Parcel createParcel(ParcelInterface component) {
+    return SimpleParcel.withComponent(component);
+  }
+}
+
+//concrete creator
+class CleverPacker extends Packer {
+  //factory method
+  @override
+  Parcel createParcel(ParcelInterface component) {
+    if (component.depth > 50 || component.height > 50 || component.width > 50) {
+      return ParcelWithFiller.withComponent(component);
+    } else {
+      return SimpleParcel.withComponent(component);
+    }
+  }
+}
+
+//concrete product parcel
+class SimpleParcel extends Parcel {
+  SimpleParcel(super.depth, super.height, super.width);
+
+  SimpleParcel.withComponent(ParcelInterface component)
+      : super(component.depth + 2, component.height + 2, component.width + 2);
+}
+
+//concrete product parcel
+class ParcelWithFiller extends Parcel {
+  ParcelWithFiller.empty(super.depth, super.height, super.width);
+
+  ParcelWithFiller.withComponent(ParcelInterface component)
+      : super(component.depth + 2, component.height + 2, component.width + 2);
+
+  static const double fillerWeightPerUnitVolume = 0.001;
+
+  double get fillerWeight {
+    return height * width * depth * fillerWeightPerUnitVolume;
+  }
 
   @override
-  double calculateWeight() {
-    return productWeight;
+  double get weight {
+    return super.weight + fillerWeight;
   }
+}
+
+class Product extends ParcelElement {
+  Product(super.height, super.width, super.depth, super.weight);
+
+  @override
+  double get totalWeight => weight;
 }

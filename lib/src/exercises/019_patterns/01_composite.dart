@@ -8,14 +8,14 @@
 
 void main() {
   ParcelComponent book = Product(250, 10, 7, 1);
-  ParcelComponent boxForBook = BoxWithFiller(12, 15, 10);
-  Parcel innerBox = ParcelWithFiller(25, 18, 20);
+  ParcelComponent boxForBook = SimpleParcel(12, 15, 10);
+  ParcelComposite innerBox = ParcelWithFiller(25, 18, 20);
   innerBox.addItem(book);
   innerBox.addItem(boxForBook);
-  ParcelComponent outerBox = BoxWithFiller(30, 20, 25);
-  Parcel parcel = SimpleParcel(35, 25, 30);
+  ParcelComponent outerBox = SimpleParcel(30, 20, 25);
+  ParcelComposite parcel = SimpleParcel(35, 25, 30);
   parcel.addItem(outerBox);
-  print('Parcel weight: ${parcel.calculateWeight()}');
+  print('Parcel weight: ${parcel.totalWeight} gm');
 }
 
 //Component
@@ -26,11 +26,15 @@ abstract interface class ParcelComponent {
 
   int get depth;
 
-  double calculateWeight();
+  double get weight;
+
+  double get totalWeight;
 }
 
 //Composite
-abstract class Parcel implements ParcelComponent {
+abstract class ParcelComposite implements ParcelComponent {
+  static const double cardboardDensity = 0.42;
+
   @override
   int depth;
 
@@ -40,7 +44,16 @@ abstract class Parcel implements ParcelComponent {
   @override
   int width;
 
-  Parcel(this.depth, this.height, this.width);
+  int get boxArea {
+    return 2 * (height * width + height * depth + depth * width);
+  }
+
+  @override
+  double get weight {
+    return boxArea * cardboardDensity;
+  }
+
+  ParcelComposite(this.depth, this.height, this.width);
 
   List<ParcelComponent> subComponents = <ParcelComponent>[];
 
@@ -57,10 +70,10 @@ abstract class Parcel implements ParcelComponent {
   }
 
   @override
-  double calculateWeight() {
-    var parcelWeight = 0.0;
+  double get totalWeight {
+    var parcelWeight = weight;
     for (ParcelComponent subComponent in subComponents) {
-      parcelWeight += subComponent.calculateWeight();
+      parcelWeight += subComponent.weight;
     }
     return parcelWeight;
   }
@@ -68,7 +81,6 @@ abstract class Parcel implements ParcelComponent {
 
 //Leaf
 abstract class ParcelElement implements ParcelComponent {
-  static const double cardboardDensity = 0.42;
 
   @override
   final int height;
@@ -79,23 +91,17 @@ abstract class ParcelElement implements ParcelComponent {
   @override
   final int depth;
 
-  ParcelElement(this.height, this.width, this.depth);
-
-  int get boxArea {
-    return 2 * (height * width + height * depth + depth * width);
-  }
-
   @override
-  double calculateWeight() {
-    return boxArea * cardboardDensity;
-  }
+  final double weight;
+
+  ParcelElement(this.height, this.width, this.depth, this.weight);
 }
 
-class SimpleParcel extends Parcel {
+class SimpleParcel extends ParcelComposite {
   SimpleParcel(super.depth, super.height, super.width);
 }
 
-class ParcelWithFiller extends Parcel {
+class ParcelWithFiller extends ParcelComposite {
   ParcelWithFiller(super.depth, super.height, super.width);
 
   static const double fillerWeightPerUnitVolume = 0.001;
@@ -105,37 +111,14 @@ class ParcelWithFiller extends Parcel {
   }
 
   @override
-  double calculateWeight() {
-    return super.calculateWeight() + fillerWeight;
-  }
-}
-
-class SimpleBox extends ParcelElement {
-  SimpleBox(super.height, super.width, super.depth);
-}
-
-class BoxWithFiller extends ParcelElement {
-  static const double fillerWeightPerUnitVolume = 0.001;
-
-  double get fillerWeight {
-    return height * width * depth * fillerWeightPerUnitVolume;
-  }
-
-  BoxWithFiller(super.height, super.width, super.depth);
-
-  @override
-  double calculateWeight() {
-    return super.calculateWeight() + fillerWeight;
+  double get weight {
+    return super.weight + fillerWeight;
   }
 }
 
 class Product extends ParcelElement {
-  double productWeight;
-
-  Product(this.productWeight, super.height, super.width, super.depth);
+  Product(super.height, super.width, super.depth, super.weight);
 
   @override
-  double calculateWeight() {
-    return productWeight;
-  }
+  double get totalWeight => weight;
 }
